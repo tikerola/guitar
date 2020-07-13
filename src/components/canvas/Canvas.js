@@ -1,6 +1,9 @@
 import React, { useRef, useEffect } from 'react'
 import { fretboardPoints } from './fretboardPoints'
 import { fretsToNotes } from './fretsToNotes'
+import { Synth } from 'tone'
+import { pitches } from './pitches'
+import { fretboardHitpoints } from './fretboardHitpoints'
 
 
 const LETTER_HEIGHT_CORRECTION = 4
@@ -13,7 +16,6 @@ export default function Canvas() {
 
   useEffect(() => {
     const canvas = canvasRef.current
-
     const ctx = canvas.getContext("2d")
 
     const fretboard = new Image()
@@ -23,25 +25,58 @@ export default function Canvas() {
     fretboard.onload = () => {
       ctx.drawImage(fretboard, 0, 0)
 
-      for (let note in fretboardPoints) {
 
-        ctx.beginPath();
-        ctx.arc(fretboardPoints[note].x, fretboardPoints[note].y, 10, 0, 2 * Math.PI);
-        ctx.fillStyle = 'yellow'
-        ctx.fill()
-        ctx.font = "10px Arial";
-        ctx.fillStyle = 'red'
-        ctx.textAlign = 'center'
-        ctx.fillText(fretsToNotes[note], fretboardPoints[note].x, fretboardPoints[note].y + LETTER_HEIGHT_CORRECTION)
-        ctx.stroke();
-      }
+      // for (const fret in fretboardPoints) {
+
+      //   if (isNote(fret) === 'A') {
+
+      //     drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'yellow', 'red');
+      //     synth.triggerAttackRelease(pitches[fret], '4n')
+      //   }
+      // }
     }
 
   }, [])
 
+  const isNote = fret => fretsToNotes[fret]
+
+  const drawNote = (ctx, x, y, note, bgColor, color) => {
+    ctx.beginPath();
+    ctx.arc(x, y, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = bgColor
+    ctx.fill()
+    ctx.font = "10px Arial";
+    ctx.fillStyle = color
+    ctx.textAlign = 'center'
+    ctx.fillText(note, x, y + LETTER_HEIGHT_CORRECTION)
+    ctx.stroke();
+  }
+
+  const handleMouseDown = e => {
+
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d")
+
+    const x = e.clientX - canvasRef.current.getBoundingClientRect().left
+    const y = e.clientY - canvasRef.current.getBoundingClientRect().top
+
+    const fret = fretboardHitpoints(x, y)
+
+    if (fret) {
+      const synth = new Synth().toMaster()
+      synth.triggerAttackRelease(pitches[fret], '4n')
+      drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'yellow', 'red');
+    }
+  }
+
   return (
     <div>
-      <canvas ref={canvasRef} width={840} height={425} />
+      <canvas
+        ref={canvasRef}
+        width={840}
+        height={425}
+        onMouseDown={handleMouseDown}
+      />
     </div>
   )
 }
