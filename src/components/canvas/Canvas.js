@@ -24,21 +24,17 @@ export default function Canvas() {
 
     fretboard.onload = () => {
       ctx.drawImage(fretboard, 0, 0)
-
-
-      // for (const fret in fretboardPoints) {
-
-      //   if (isNote(fret) === 'A') {
-
-      //     drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'yellow', 'red');
-      //     synth.triggerAttackRelease(pitches[fret], '4n')
-      //   }
-      // }
     }
 
   }, [])
 
   const isNote = fret => fretsToNotes[fret]
+
+  const drawBackgroundWithDelay = (ctx, ms) => {
+    setTimeout(() => {
+      ctx.drawImage(fretboardRef.current, 0, 0)
+    }, ms)
+  }
 
   const drawNote = (ctx, x, y, note, bgColor, color) => {
     ctx.beginPath();
@@ -66,6 +62,8 @@ export default function Canvas() {
       const synth = new Synth().toMaster()
       synth.triggerAttackRelease(pitches[fret], '4n')
       drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'yellow', 'red');
+
+      drawBackgroundWithDelay(ctx, 500)
     }
   }
 

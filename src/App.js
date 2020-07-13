@@ -8,7 +8,12 @@ function App() {
   return (
     <div>
       <NavBar />
-      <Canvas />
+      <div className="d-flex flex-row justify-content-between">
+        <Canvas />
+        <div className="container mt-32">
+          <h2 className="text-center">Fretboard Mastery</h2>
+        </div>
+      </div>
     </div>
   );
 }
