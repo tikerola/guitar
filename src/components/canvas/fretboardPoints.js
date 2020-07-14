@@ -2,12 +2,12 @@
 export const FRET_WIDTH = 61;
 export const FRET_HEIGHT = 25;
 
-const E_FRET_HEIGHT = 162;
-const A_FRET_HEIGHT = 137;
-const D_FRET_HEIGHT = 112;
-const G_FRET_HEIGHT = 87;
-const B_FRET_HEIGHT = 62;
-const e_FRET_HEIGHT = 37;
+export const E_FRET_HEIGHT = 162;
+export const A_FRET_HEIGHT = 137;
+export const D_FRET_HEIGHT = 112;
+export const G_FRET_HEIGHT = 87;
+export const B_FRET_HEIGHT = 62;
+export const e_FRET_HEIGHT = 37;
 
 const strings = ['E', 'A', 'D', 'G', 'B', 'e']
 

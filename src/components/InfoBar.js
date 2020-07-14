@@ -10,6 +10,9 @@ export default function InfoBar() {
         Find the right note at the right fret. Try to quess as many as you can in 60 seconds.
       </p>
       <p className="pl-3 pr-3 pb-3">
+        The string where you need to find a given note is highlighted during a game.
+      </p>
+      <p className="pl-3 pr-3 pb-3">
         Press <kbd>spacebar</kbd> to start a new game.
       </p>
       <Counter />

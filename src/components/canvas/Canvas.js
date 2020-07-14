@@ -1,16 +1,37 @@
-import React, { useRef, useEffect, useContext } from 'react'
-import { fretboardPoints } from './fretboardPoints'
+import React, { useRef, useEffect, useContext, useState } from 'react'
+import {
+  fretboardPoints,
+  E_FRET_HEIGHT,
+  A_FRET_HEIGHT,
+  D_FRET_HEIGHT,
+  G_FRET_HEIGHT,
+  B_FRET_HEIGHT,
+  e_FRET_HEIGHT
+} from './fretboardPoints'
+
 import { fretsToNotes } from './fretsToNotes'
 import { Synth } from 'tone'
 import { pitches } from './pitches'
 import { fretboardHitpoints } from './fretboardHitpoints'
 import { FretboardMasteryCtx } from '../../App'
 
+const STRINGS = [
+  E_FRET_HEIGHT,
+  A_FRET_HEIGHT,
+  D_FRET_HEIGHT,
+  G_FRET_HEIGHT,
+  B_FRET_HEIGHT,
+  e_FRET_HEIGHT
+]
 
 const LETTER_HEIGHT_CORRECTION = 4
+const STRING_X_STARTING_COORDINATE = 53
+const STRING_X_ENDING_COORDINATE = 840
 
 
 export default function Canvas() {
+
+  const [activeString, setActiveString] = useState()
 
   const canvasRef = useRef()
   const fretboardRef = useRef()
@@ -30,11 +51,20 @@ export default function Canvas() {
     }
   }, [])
 
-  const isNote = fret => fretsToNotes[fret]
+  useEffect(() => {
+    if (!state.gameFinished) {
+      const ctx = canvasRef.current.getContext('2d')
+      ctx.drawImage(fretboardRef.current, 0, 0)
+      drawActiveString()
+    }
+  }, [state.gameFinished])
+
+  // const isNote = fret => fretsToNotes[fret]
 
   const drawBackgroundWithDelay = (ctx, ms) => {
     setTimeout(() => {
       ctx.drawImage(fretboardRef.current, 0, 0)
+      drawActiveString()
     }, ms)
   }
 
@@ -62,19 +92,35 @@ export default function Canvas() {
     const x = e.clientX - canvasRef.current.getBoundingClientRect().left
     const y = e.clientY - canvasRef.current.getBoundingClientRect().top
 
-    const fret = fretboardHitpoints(x, y)
+    const fret = fretboardHitpoints(x, y, activeString)
 
     if (fret) {
       const synth = new Synth().toMaster()
       synth.triggerAttackRelease(pitches[fret], '4n')
-      drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'yellow', 'red');
+      drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'black', 'white');
 
       if (fretsToNotes[fret] === state.noteToQuess)
         dispatch({ type: 'ADD_POINT' })
 
       dispatch({ type: 'NEW_NOTE' })
+
       drawBackgroundWithDelay(ctx, 500)
     }
+  }
+
+  const drawActiveString = () => {
+    const stringIndex = Math.floor(Math.random() * STRINGS.length)
+    const string = STRINGS[stringIndex]
+    setActiveString(string)
+    const ctx = canvasRef.current.getContext('2d')
+
+    ctx.beginPath();
+    ctx.moveTo(STRING_X_STARTING_COORDINATE, string)
+    ctx.fillStyle = 'red'
+    ctx.lineWidth = 5
+
+    ctx.lineTo(STRING_X_ENDING_COORDINATE, string)
+    ctx.stroke();
   }
 
   return (
