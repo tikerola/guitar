@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { FretboardMasteryCtx } from '../App'
 
+
+
 export default function Counter() {
 
   const [counter, setCounter] = useState(0)
 
-  const [gameFinished, setGameFinished] = useContext(FretboardMasteryCtx)
+
+  const [, dispatch] = useContext(FretboardMasteryCtx)
 
   const interval = useRef()
 
@@ -17,7 +20,7 @@ export default function Counter() {
         if (interval.current) {
           clearInterval(interval.current)
           interval.current = null
-          setGameFinished(true)
+          dispatch({ type: 'FINISH_GAME' })
         }
         else {
           interval.current = setInterval(() => {
@@ -41,27 +44,27 @@ export default function Counter() {
   useEffect(() => {
 
     if (counter === 60)
-      setGameFinished(false)
+      dispatch({ type: 'START_GAME' })
 
     if (counter === 0)
       clearInterval(interval.current)
-  }, [counter, setGameFinished])
+  }, [counter, dispatch])
 
 
   const renderCounter = () => {
-    if (counter === 0)
-      return null
+    // if (counter === 0)
+    //   return null
 
     return counter <= 60
       ?
-      counter
+      <span>Timer: {counter}</span>
       :
-      <span className="text-danger">{counter - 60}</span>
+      <span className="text-danger display-3">{counter - 60}</span>
   }
 
   return (
     <div className="text-center">
-      <h1>{renderCounter()}</h1>
+      <h2>{renderCounter()}</h2>
     </div>
   )
 }

@@ -15,7 +15,7 @@ export default function Canvas() {
   const canvasRef = useRef()
   const fretboardRef = useRef()
 
-  const [gameFinished] = useContext(FretboardMasteryCtx)
+  const [state] = useContext(FretboardMasteryCtx)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -54,7 +54,7 @@ export default function Canvas() {
   const handleMouseDown = e => {
 
     // You can play notes only when game is on
-    if (gameFinished)
+    if (state.gameFinished)
       return
 
     const canvas = canvasRef.current
@@ -79,7 +79,7 @@ export default function Canvas() {
       <canvas
         ref={canvasRef}
         width={840}
-        height={425}
+        height={225}
         onMouseDown={handleMouseDown}
       />
     </div>
