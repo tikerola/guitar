@@ -1,5 +1,5 @@
 
-const notes = [
+export const notes = [
   'C',
   'C#',
   'D',

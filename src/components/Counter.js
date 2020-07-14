@@ -52,8 +52,6 @@ export default function Counter() {
 
 
   const renderCounter = () => {
-    // if (counter === 0)
-    //   return null
 
     return counter <= 60
       ?

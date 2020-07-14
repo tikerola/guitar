@@ -15,7 +15,7 @@ export default function Canvas() {
   const canvasRef = useRef()
   const fretboardRef = useRef()
 
-  const [state] = useContext(FretboardMasteryCtx)
+  const [state, dispatch] = useContext(FretboardMasteryCtx)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -28,7 +28,6 @@ export default function Canvas() {
     fretboard.onload = () => {
       ctx.drawImage(fretboard, 0, 0)
     }
-
   }, [])
 
   const isNote = fret => fretsToNotes[fret]
@@ -70,6 +69,10 @@ export default function Canvas() {
       synth.triggerAttackRelease(pitches[fret], '4n')
       drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'yellow', 'red');
 
+      if (fretsToNotes[fret] === state.noteToQuess)
+        dispatch({ type: 'ADD_POINT' })
+
+      dispatch({ type: 'NEW_NOTE' })
       drawBackgroundWithDelay(ctx, 500)
     }
   }
