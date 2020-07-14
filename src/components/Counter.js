@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
+import { FretboardMasteryCtx } from '../App'
 
 export default function Counter() {
 
   const [counter, setCounter] = useState(0)
 
+  const [gameFinished, setGameFinished] = useContext(FretboardMasteryCtx)
 
   const interval = useRef()
 
@@ -15,6 +17,7 @@ export default function Counter() {
         if (interval.current) {
           clearInterval(interval.current)
           interval.current = null
+          setGameFinished(true)
         }
         else {
           interval.current = setInterval(() => {
@@ -32,12 +35,17 @@ export default function Counter() {
       clearInterval(interval.current)
       document.removeEventListener('keyup', handleKeyUp)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
+
+    if (counter === 60)
+      setGameFinished(false)
+
     if (counter === 0)
       clearInterval(interval.current)
-  }, [counter])
+  }, [counter, setGameFinished])
 
 
   const renderCounter = () => {

@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import { fretboardPoints } from './fretboardPoints'
 import { fretsToNotes } from './fretsToNotes'
 import { Synth } from 'tone'
 import { pitches } from './pitches'
 import { fretboardHitpoints } from './fretboardHitpoints'
+import { FretboardMasteryCtx } from '../../App'
 
 
 const LETTER_HEIGHT_CORRECTION = 4
@@ -13,6 +14,8 @@ export default function Canvas() {
 
   const canvasRef = useRef()
   const fretboardRef = useRef()
+
+  const [gameFinished] = useContext(FretboardMasteryCtx)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -49,6 +52,10 @@ export default function Canvas() {
   }
 
   const handleMouseDown = e => {
+
+    // You can play notes only when game is on
+    if (gameFinished)
+      return
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d")
