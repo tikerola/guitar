@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FretboardMasteryCtx } from '../App'
+import { FretboardMasteryCtx } from './FretboardMastery'
 
 export default function Results() {
 

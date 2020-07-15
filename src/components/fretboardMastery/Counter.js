@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import { FretboardMasteryCtx } from '../App'
+import { FretboardMasteryCtx } from './FretboardMastery'
 
 
 const GAME_DURATION = 60

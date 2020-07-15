@@ -7,13 +7,13 @@ import {
   G_FRET_HEIGHT,
   B_FRET_HEIGHT,
   e_FRET_HEIGHT
-} from './fretboardPoints'
+} from '../../../helpers/fretboardPoints'
 
-import { fretsToNotes } from './fretsToNotes'
-import { Synth } from 'tone'
-import { pitches } from './pitches'
-import { fretboardHitpoints } from './fretboardHitpoints'
-import { FretboardMasteryCtx } from '../../App'
+import { fretsToNotes } from '../../../helpers/fretsToNotes'
+import * as Tone from 'tone'
+import { pitches } from '../../../helpers/pitches'
+import { fretboardHitpoints } from '../../../helpers/fretboardHitpoints'
+import { FretboardMasteryCtx } from '../FretboardMastery'
 
 const STRINGS = [
   E_FRET_HEIGHT,
@@ -95,7 +95,11 @@ export default function Canvas() {
     const fret = fretboardHitpoints(x, y, activeString)
 
     if (fret) {
-      const synth = new Synth().toMaster()
+      const synth = new Tone.Synth();
+
+      // Connect to the speakers.
+      synth.toMaster();
+
       synth.triggerAttackRelease(pitches[fret], '4n')
       drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'black', 'white');
 
