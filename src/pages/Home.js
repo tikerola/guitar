@@ -9,13 +9,23 @@ export default function Home() {
         <img src="./assets/images/key1.png" alt="guitar" height="120" />
       </div>
       <div className="d-flex flex-row justify-content-around container">
-        <div className="w-30">
-          <p className="card-body">This is a page dedicated to help guitarists to learn more about their instrument:
-notes on the fretboard, intervals, scales etc.</p>
+        <div className="m-5 w-25">
+          <h3>About Us</h3>
+          <p className="">This page is dedicated to help guitarists to learn more about their instrument:
+notes, fretboard, intervals, scales etc.</p>
+          <p>
+            Browse through and see if there's something that meets your particular needs.
+</p>
         </div>
-        <div className="w-30">
-          <p className="card-body">This is a page dedicated to help guitarists to learn more about their instrument:
-notes on the fretboard, intervals, scales etc.</p>
+        <div className="m-5 w-50 d-flex flex-row">
+          <img src="./assets/images/yoda.png" alt="happy customer" height="120" />
+          <div>
+            <q>This page with it's explicit content has given me so much through the years...</q>
+            <div className="text-right">
+              <i>David B. Hernandez</i>
+            </div>
+          </div>
+
         </div>
 
 
