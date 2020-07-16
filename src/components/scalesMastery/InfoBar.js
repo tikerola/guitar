@@ -9,8 +9,11 @@ export default function InfoBar() {
   const [state, dispatch] = useContext(ScalesContext)
 
   const handleChange = checked => {
-
     dispatch({ type: 'TOGGLE_BETWEEN_NOTES_AND_INTERVALS', payload: checked })
+  }
+
+  const handleHighlighted = checked => {
+    dispatch({ type: 'HIGHLIGHT', payload: checked })
   }
 
   return (
@@ -19,12 +22,11 @@ export default function InfoBar() {
       <p className="pl-3 pt-3 pr-3">
         Scale is an ordered sequence of notes.
         Once you have chosen a scale of your choice, you can toggle between notes and scale degrees.
+        Letter (R) represents the root of the scale.
       </p>
       <div className="pl-3 pr-3 pb-3">
-
-
         <label className="d-flex flex-row">
-          <span className="mr-3">Scale Degrees</span>
+          <span className="mr-3 font-weight-bolder">Scale Degrees</span>
           <Switch
             onChange={handleChange}
             checked={state.showNotes}
@@ -32,7 +34,27 @@ export default function InfoBar() {
             uncheckedIcon={false}
             className="align-self-end"
           />
-          <span className="ml-3">Notes</span>
+          <span className="ml-3 font-weight-bolder">Notes</span>
+        </label>
+      </div>
+
+      <div className="pl-3 pr-3 pb-3">
+        If you wish to see which notes make up a triad chord, you can able highlighted mode below.
+        Root is colored red and 3rd's and 5th's are blue. Can you see familiar chord shapes?
+        
+      </div>
+
+      <div className="pl-3 pr-3 pb-3">
+        <label className="d-flex flex-row">
+          <span className="mr-3 font-weight-bolder">Normal View</span>
+          <Switch
+            onChange={handleHighlighted}
+            checked={state.highlighted}
+            checkedIcon={false}
+            uncheckedIcon={false}
+            className="align-self-end"
+          />
+          <span className="ml-3 font-weight-bolder">Highlighted</span>
 
         </label>
 

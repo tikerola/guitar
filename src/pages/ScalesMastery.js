@@ -6,7 +6,8 @@ import ScaleSelects from '../components/scalesMastery/ScaleSelects'
 const initialState = {
   scale: 'minor blues',
   key: 'A',
-  showNotes: false
+  showNotes: false,
+  highlighted: false
 }
 
 const reducer = (state, action) => {
@@ -27,6 +28,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         showNotes: action.payload
+      }
+    case 'HIGHLIGHT':
+      return {
+        ...state,
+        highlighted: action.payload
       }
 
     default:

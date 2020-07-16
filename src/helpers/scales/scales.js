@@ -32,15 +32,22 @@ const MINOR_BLUES = [3, 2, 1, 1, 3, 2]
 
 const SCALE_DEGREES = ['b2', '2', 'b3', '3', '4', 'b5', '5', 'b6', '6', 'b7', '7', 'R']
 
+const MAJOR_TRIAD = ['R', '3', '5']
+const MINOR_TRIAD = ['R', 'b3', '5']
+
+let triad = MINOR_TRIAD
+
 const returnScale = scaleName => {
   switch (scaleName) {
     case 'minor pentatonic':
       return MINOR_PENTATONIC_SCALE
 
     case 'major pentatonic':
+      triad = MAJOR_TRIAD
       return MAJOR_PENTATONIC_SCALE
 
     case 'major scale':
+      triad = MAJOR_TRIAD
       return MAJOR_SCALE
 
     case 'minor scale':
@@ -53,15 +60,18 @@ const returnScale = scaleName => {
       return PHRYGIAN
 
     case 'lydian':
+      triad = MAJOR_TRIAD
       return LYDIAN
 
     case 'mixolydian':
+      triad = MAJOR_TRIAD
       return MIXOLYDIAN
 
     case 'locrian':
       return LOCRIAN
 
     case 'major blues':
+      triad = MAJOR_TRIAD
       return MAJOR_BLUES
 
     case 'minor blues':
@@ -72,7 +82,7 @@ const returnScale = scaleName => {
   }
 }
 
-export const drawScale = (canvasRef, scale, key, showNotes) => {
+export const drawScale = (canvasRef, scale, key, showNotes, highlighted) => {
   const ctx = canvasRef.current.getContext('2d')
 
   let currentIndex = NOTES.findIndex(note => note === key)
@@ -87,14 +97,14 @@ export const drawScale = (canvasRef, scale, key, showNotes) => {
 
   let halfNotes = {}
 
-  if (!showNotes) {
-    for (let i = 0; i < scaleIntervals.length; i++) {
-      if (i === 0)
-        halfNotes[notes[i]] = scaleIntervals[i]
-      else
-        halfNotes[notes[i]] = scaleIntervals[i] + halfNotes[notes[i - 1]]
-    }
+
+  for (let i = 0; i < scaleIntervals.length; i++) {
+    if (i === 0)
+      halfNotes[notes[i]] = scaleIntervals[i]
+    else
+      halfNotes[notes[i]] = scaleIntervals[i] + halfNotes[notes[i - 1]]
   }
+
 
 
   for (const fret in fretboardPoints) {
@@ -108,12 +118,34 @@ export const drawScale = (canvasRef, scale, key, showNotes) => {
           drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, 'R', 'red', 'white')
       }
 
+      else if (triad.includes(SCALE_DEGREES[halfNotes[note] - 1]))
+        if (showNotes)
+          if (highlighted)
+            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note, 'blue', 'white')
+          else
+            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note)
+
+        else {
+          if (highlighted)
+            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1], 'blue', 'white')
+          else
+            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1])
+        }
+
       else
         if (showNotes)
-          drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note)
+          if (highlighted)
+            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note, 'white', 'black')
+
+          else
+            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note)
 
         else
-          drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1])
+          if (highlighted)
+            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1], 'white', 'black')
+          else
+            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1])
+
     }
   }
 }
