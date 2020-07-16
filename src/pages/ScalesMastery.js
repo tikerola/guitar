@@ -5,7 +5,8 @@ import ScaleSelects from '../components/scalesMastery/ScaleSelects'
 
 const initialState = {
   scale: 'minor blues',
-  key: 'A'
+  key: 'A',
+  showNotes: false
 }
 
 const reducer = (state, action) => {
@@ -20,6 +21,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         scale: action.payload
+      }
+
+    case 'TOGGLE_BETWEEN_NOTES_AND_INTERVALS':
+      return {
+        ...state,
+        showNotes: action.payload
       }
 
     default:

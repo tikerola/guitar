@@ -30,6 +30,8 @@ const LOCRIAN = [1, 2, 2, 1, 2, 2, 2]
 const MAJOR_BLUES = [2, 1, 1, 3, 2, 3]
 const MINOR_BLUES = [3, 2, 1, 1, 3, 2]
 
+const SCALE_DEGREES = ['b2', '2', 'b3', '3', '4', 'b5', '5', 'b6', '6', 'b7', '7', 'R']
+
 const returnScale = scaleName => {
   switch (scaleName) {
     case 'minor pentatonic':
@@ -70,7 +72,7 @@ const returnScale = scaleName => {
   }
 }
 
-export const drawScale = (canvasRef, scale, key) => {
+export const drawScale = (canvasRef, scale, key, showNotes) => {
   const ctx = canvasRef.current.getContext('2d')
 
   let currentIndex = NOTES.findIndex(note => note === key)
@@ -82,14 +84,36 @@ export const drawScale = (canvasRef, scale, key) => {
     return NOTES[currentIndex]
   })
 
+
+  let halfNotes = {}
+
+  if (!showNotes) {
+    for (let i = 0; i < scaleIntervals.length; i++) {
+      if (i === 0)
+        halfNotes[notes[i]] = scaleIntervals[i]
+      else
+        halfNotes[notes[i]] = scaleIntervals[i] + halfNotes[notes[i - 1]]
+    }
+  }
+
+
   for (const fret in fretboardPoints) {
     let note = fretsToNotes[fret]
+
     if (notes.includes(note)) {
-      if (note === key)
-        drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note, 'red', 'white')
+      if (note === key) {
+        if (showNotes)
+          drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note, 'red', 'white')
+        else
+          drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, 'R', 'red', 'white')
+      }
 
       else
-        drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note)
+        if (showNotes)
+          drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note)
+
+        else
+          drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1])
     }
   }
 }

@@ -13,14 +13,14 @@ import { ScalesContext } from '../../pages/ScalesMastery'
 export default function Canvas() {
 
 
-  const [state, dispatch] = useContext(ScalesContext)
+  const [state] = useContext(ScalesContext)
 
   const canvasRef = useRef()
   const fretboardRef = useRef()
 
   useEffect(() => {
-    initializeFretboard(canvasRef, fretboardRef, () => drawScale(canvasRef, state.scale, state.key))
-  }, [state.key, state.scale])
+    initializeFretboard(canvasRef, fretboardRef, () => drawScale(canvasRef, state.scale, state.key, state.showNotes))
+  }, [state.key, state.scale, state.showNotes])
 
   // const isNote = fret => fretsToNotes[fret]
 

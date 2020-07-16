@@ -15,7 +15,7 @@ export default function ScaleSelects() {
   }
 
   return (
-    <div className="container border d-flex flex-row justify-content-around">
+    <div className="container d-flex flex-row justify-content-around">
 
       <div >
         <h5 className="text-center font-weight-bolder">KEY</h5>
@@ -43,7 +43,7 @@ export default function ScaleSelects() {
       </div>
 
       <div >
-        <h5 className="text-center font-weight-bolder">SCALES</h5>
+        <h5 className="text-center font-weight-bolder">SCALE</h5>
         <div className="row">
           <Button className="col" active={state.scale === 'major scale'} handleClick={() => handleScaleChange('major scale')}>Major</Button>
           <Button className="col" active={state.scale === 'minor scale'} handleClick={() => handleScaleChange('minor scale')}>Minor</Button>
