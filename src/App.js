@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import FretboardMastery from './pages/FretboardMastery'
 import IntervalMastery from './pages/IntervalMastery'
+import ScalesMastery from './pages/ScalesMastery'
 import NavBar from './components/NavBar'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './pages/Home';
@@ -16,6 +17,7 @@ function App() {
         <NavBar />
         <Route path="/Fretboard-Mastery" component={FretboardMastery} />
         <Route path="/Interval-Mastery" component={IntervalMastery} />
+        <Route path="/Scales-Mastery" component={ScalesMastery} />
         <Route exact path="/" component={Home} />
       </Router>
       <div className="fixed-bottom">

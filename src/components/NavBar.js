@@ -11,10 +11,13 @@ export default withRouter(function NavBar({ location }) {
             <Link className="nav-link" to="/">Home</Link>
           </li>
           <li className={`nav-item ${location.pathname === '/Fretboard-Mastery' && 'active'}`}>
-            <Link className="nav-link" to="Fretboard-Mastery">Fretboard Mastery</Link>
+            <Link className="nav-link" to="Fretboard-Mastery">Fretboard</Link>
+          </li>
+          <li className={`nav-item ${location.pathname === '/Scales-Mastery' && 'active'}`}>
+            <Link className="nav-link" to="Scales-Mastery">Scales</Link>
           </li>
           <li className={`nav-item ${location.pathname === '/Interval-Mastery' && 'active'}`}>
-            <Link className="nav-link" to="Interval-Mastery">Interval Mastery</Link>
+            <Link className="nav-link" to="Interval-Mastery">Interval</Link>
           </li>
 
         </ul>

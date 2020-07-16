@@ -1,11 +1,3 @@
-// export const pitches = {
-//   'E2': ['E0'],
-//   'E3': ['E12', 'A7', 'D2'],
-//   'E4': ['G9', 'B5', 'e0'],
-//   'E5': ['e12'],
-
-
-// }
 
 export const pitches = {
   'E0': 'E2',

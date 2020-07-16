@@ -12,7 +12,7 @@ import {
 import { fretsToNotes } from '../../helpers/fretsToNotes'
 import * as Tone from 'tone'
 import { pitches } from '../../helpers/pitches'
-import { fretboardHitpoints } from '../../helpers/fretboardHitpoints'
+import { inWhichFret } from '../../helpers/fretboardHitpoints'
 import { FretboardMasteryCtx } from '../../pages/FretboardMastery'
 
 const STRINGS = [
@@ -92,7 +92,7 @@ export default function Canvas() {
     const x = e.clientX - canvasRef.current.getBoundingClientRect().left
     const y = e.clientY - canvasRef.current.getBoundingClientRect().top
 
-    const fret = fretboardHitpoints(x, y, activeString)
+    const fret = inWhichFret(x, y, activeString)
 
     if (fret) {
       const synth = new Tone.Synth();

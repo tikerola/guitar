@@ -1,0 +1,21 @@
+import {
+  E_FRET_HEIGHT,
+  A_FRET_HEIGHT,
+  D_FRET_HEIGHT,
+  G_FRET_HEIGHT,
+  B_FRET_HEIGHT,
+  e_FRET_HEIGHT
+} from './fretboardPoints'
+
+export const STRINGS = [
+  E_FRET_HEIGHT,
+  A_FRET_HEIGHT,
+  D_FRET_HEIGHT,
+  G_FRET_HEIGHT,
+  B_FRET_HEIGHT,
+  e_FRET_HEIGHT
+]
+
+export const LETTER_HEIGHT_CORRECTION = 4
+export const STRING_X_STARTING_COORDINATE = 53
+export const STRING_X_ENDING_COORDINATE = 840
