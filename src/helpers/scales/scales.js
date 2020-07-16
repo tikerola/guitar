@@ -35,11 +35,13 @@ const SCALE_DEGREES = ['b2', '2', 'b3', '3', '4', 'b5', '5', 'b6', '6', 'b7', '7
 const MAJOR_TRIAD = ['R', '3', '5']
 const MINOR_TRIAD = ['R', 'b3', '5']
 
-let triad = MINOR_TRIAD
+let triad = ''
+
 
 const returnScale = scaleName => {
   switch (scaleName) {
     case 'minor pentatonic':
+      triad = MINOR_TRIAD
       return MINOR_PENTATONIC_SCALE
 
     case 'major pentatonic':
@@ -51,12 +53,15 @@ const returnScale = scaleName => {
       return MAJOR_SCALE
 
     case 'minor scale':
+      triad = MINOR_TRIAD
       return MINOR_SCALE
 
     case 'dorian':
+      triad = MINOR_TRIAD
       return DORIAN
 
     case 'phrygian':
+      triad = MINOR_TRIAD
       return PHRYGIAN
 
     case 'lydian':
@@ -68,6 +73,7 @@ const returnScale = scaleName => {
       return MIXOLYDIAN
 
     case 'locrian':
+      triad = MINOR_TRIAD
       return LOCRIAN
 
     case 'major blues':
@@ -75,9 +81,11 @@ const returnScale = scaleName => {
       return MAJOR_BLUES
 
     case 'minor blues':
+      triad = MINOR_TRIAD
       return MINOR_BLUES
 
     default:
+      triad = MINOR_TRIAD
       return MINOR_SCALE
   }
 }
