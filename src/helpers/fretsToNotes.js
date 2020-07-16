@@ -16,7 +16,7 @@ export const notes = [
 
 
 const strings = ['E', 'A', 'D', 'G', 'B', 'e']
-const firstNoteIndexes = [5, 10, 3, 8, 0, 5]
+const firstNoteIndexes = [5, 10, 3, 8, 12, 5]
 
 
 // Object for converting E1 -> F and A3 -> C etc.

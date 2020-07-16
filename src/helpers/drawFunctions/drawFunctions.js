@@ -34,7 +34,8 @@ export const drawActiveString = (canvasRef) => {
   ctx.stroke();
 }
 
-export const initializeFretboard = (canvasRef, fretboardRef) => {
+export const initializeFretboard = (canvasRef, fretboardRef, cb) => {
+
   const ctx = canvasRef.current.getContext("2d")
 
   const fretboard = new Image()
@@ -43,5 +44,7 @@ export const initializeFretboard = (canvasRef, fretboardRef) => {
 
   fretboard.onload = () => {
     ctx.drawImage(fretboard, 0, 0)
+    if (cb)
+      cb()
   }
 }

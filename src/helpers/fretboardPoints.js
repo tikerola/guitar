@@ -9,18 +9,21 @@ export const G_FRET_HEIGHT = 87;
 export const B_FRET_HEIGHT = 62;
 export const e_FRET_HEIGHT = 37;
 
+const ZERO_FRET_X = 21
+
 const strings = ['E', 'A', 'D', 'G', 'B', 'e']
 
 
 // Coordinates of first fret of every string
+// Initiation not necessary but gives an idea how points are constructed
 
 const fretboardPoints = {
-  'E0': { x: 21, y: E_FRET_HEIGHT },
-  'A0': { x: 21, y: A_FRET_HEIGHT },
-  'D0': { x: 21, y: D_FRET_HEIGHT },
-  'G0': { x: 21, y: G_FRET_HEIGHT },
-  'B0': { x: 21, y: B_FRET_HEIGHT },
-  'e0': { x: 21, y: e_FRET_HEIGHT },
+  'E0': { x: ZERO_FRET_X, y: E_FRET_HEIGHT },
+  'A0': { x: ZERO_FRET_X, y: A_FRET_HEIGHT },
+  'D0': { x: ZERO_FRET_X, y: D_FRET_HEIGHT },
+  'G0': { x: ZERO_FRET_X, y: G_FRET_HEIGHT },
+  'B0': { x: ZERO_FRET_X, y: B_FRET_HEIGHT },
+  'e0': { x: ZERO_FRET_X, y: e_FRET_HEIGHT },
 }
 
 

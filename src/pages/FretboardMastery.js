@@ -55,7 +55,6 @@ function FretboardMastery() {
 
   return (
     <div>
-
       <FretboardMasteryCtx.Provider value={[state, dispatch]} >
         <div className="d-flex flex-row justify-content-between">
           <div>
