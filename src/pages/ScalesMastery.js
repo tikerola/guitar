@@ -4,7 +4,7 @@ import InfoBar from '../components/scalesMastery/InfoBar'
 import ScaleSelects from '../components/scalesMastery/ScaleSelects'
 
 const initialState = {
-  scale: 'minor pentatonic',
+  scale: 'minor blues',
   key: 'A'
 }
 

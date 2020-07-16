@@ -27,6 +27,8 @@ const PHRYGIAN = [1, 2, 2, 2, 1, 2, 2]
 const LYDIAN = [2, 2, 2, 1, 2, 2, 1]
 const MIXOLYDIAN = [2, 2, 1, 2, 2, 1, 2]
 const LOCRIAN = [1, 2, 2, 1, 2, 2, 2]
+const MAJOR_BLUES = [2, 1, 1, 3, 2, 3]
+const MINOR_BLUES = [3, 2, 1, 1, 3, 2]
 
 const returnScale = scaleName => {
   switch (scaleName) {
@@ -56,6 +58,12 @@ const returnScale = scaleName => {
 
     case 'locrian':
       return LOCRIAN
+
+    case 'major blues':
+      return MAJOR_BLUES
+
+    case 'minor blues':
+      return MINOR_BLUES
 
     default:
       return MINOR_SCALE

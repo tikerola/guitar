@@ -61,6 +61,12 @@ export default function ScaleSelects() {
           <Button className="col" active={state.scale === 'locrian'} handleClick={() => handleScaleChange('locrian')}>Locrian</Button>
         </div>
 
+        <div className="row">
+          <Button className="col" active={state.scale === 'major blues'} handleClick={() => handleScaleChange('major blues')}>Blues Major</Button>
+          <Button className="col" active={state.scale === 'minor blues'} handleClick={() => handleScaleChange('minor blues')}>Blues Minor</Button>
+
+        </div>
+
       </div>
 
     </div>
