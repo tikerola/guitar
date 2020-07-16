@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FretboardMasteryCtx } from './FretboardMastery'
+import { FretboardMasteryCtx } from '../../pages/FretboardMastery'
 
 export default function Results() {
 

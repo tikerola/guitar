@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import FretboardMastery from './components/fretboardMastery/FretboardMastery'
-import IntervalMastery from './components/intervalMastery/IntervalMastery'
+import FretboardMastery from './pages/FretboardMastery'
+import IntervalMastery from './pages/IntervalMastery'
 import NavBar from './components/NavBar'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './pages/Home';

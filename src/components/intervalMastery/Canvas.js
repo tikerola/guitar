@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import {
   fretboardPoints,
   E_FRET_HEIGHT,
@@ -7,13 +7,13 @@ import {
   G_FRET_HEIGHT,
   B_FRET_HEIGHT,
   e_FRET_HEIGHT
-} from '../../../helpers/fretboardPoints'
+} from '../../helpers/fretboardPoints'
 
-import { fretsToNotes } from '../../../helpers/fretsToNotes'
+import { fretsToNotes } from '../../helpers/fretsToNotes'
 import * as Tone from 'tone'
-import { pitches } from '../../../helpers/pitches'
-import { fretboardHitpoints } from '../../../helpers/fretboardHitpoints'
-import { FretboardMasteryCtx } from '../FretboardMastery'
+import { pitches } from '../../helpers/pitches'
+import { fretboardHitpoints } from '../../helpers/fretboardHitpoints'
+
 
 const STRINGS = [
   E_FRET_HEIGHT,
@@ -31,12 +31,10 @@ const STRING_X_ENDING_COORDINATE = 840
 
 export default function Canvas() {
 
-  const [activeString, setActiveString] = useState()
-
   const canvasRef = useRef()
   const fretboardRef = useRef()
 
-  const [state, dispatch] = useContext(FretboardMasteryCtx)
+  //const [state, dispatch] = useContext(FretboardMasteryCtx)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -51,13 +49,6 @@ export default function Canvas() {
     }
   }, [])
 
-  useEffect(() => {
-    if (!state.gameFinished) {
-      const ctx = canvasRef.current.getContext('2d')
-      ctx.drawImage(fretboardRef.current, 0, 0)
-      drawActiveString()
-    }
-  }, [state.gameFinished])
 
   // const isNote = fret => fretsToNotes[fret]
 
@@ -82,9 +73,6 @@ export default function Canvas() {
 
   const handleMouseDown = e => {
 
-    // You can play notes only when game is on
-    if (state.gameFinished)
-      return
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d")
@@ -92,7 +80,7 @@ export default function Canvas() {
     const x = e.clientX - canvasRef.current.getBoundingClientRect().left
     const y = e.clientY - canvasRef.current.getBoundingClientRect().top
 
-    const fret = fretboardHitpoints(x, y, activeString)
+    const fret = fretboardHitpoints(x, y)
 
     if (fret) {
       const synth = new Tone.Synth();
@@ -103,10 +91,6 @@ export default function Canvas() {
       synth.triggerAttackRelease(pitches[fret], '4n')
       drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'black', 'white');
 
-      if (fretsToNotes[fret] === state.noteToQuess)
-        dispatch({ type: 'ADD_POINT' })
-
-      dispatch({ type: 'NEW_NOTE' })
 
       drawBackgroundWithDelay(ctx, 500)
     }
@@ -115,7 +99,7 @@ export default function Canvas() {
   const drawActiveString = () => {
     const stringIndex = Math.floor(Math.random() * STRINGS.length)
     const string = STRINGS[stringIndex]
-    setActiveString(string)
+
     const ctx = canvasRef.current.getContext('2d')
 
     ctx.beginPath();

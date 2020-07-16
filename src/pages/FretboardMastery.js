@@ -1,9 +1,9 @@
 import React, { createContext, useReducer } from 'react';
-import { notes } from '../../helpers/fretsToNotes';
-import Canvas from './canvas/Canvas';
-import './FretboardMastery.css';
-import InfoBar from './InfoBar';
-import Results from './Results';
+import { notes } from '../helpers/fretsToNotes';
+import Canvas from '../components/fretboardMastery/Canvas'
+import '../components/fretboardMastery/styles/FretboardMastery.css';
+import InfoBar from '../components/fretboardMastery/InfoBar';
+import Results from '../components/fretboardMastery/Results';
 
 
 export const FretboardMasteryCtx = createContext()

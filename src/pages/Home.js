@@ -24,8 +24,8 @@ export default function Home() {
         <div className="m-5 w-50 d-flex flex-row align-self-center">
           <img src="./assets/images/yoda.png" alt="happy customer" height="120" />
           <div>
-            <q><i>This page with it's explicit content has given me so much through the years... That
-            came out funny, but it's the truth.</i></q>
+            <q><i>This page with it's explicit content has given me so much through the years... LOL, that
+            funny came out.</i></q>
             <div className="text-right">
               <i>David B. Hernandez</i>
             </div>
