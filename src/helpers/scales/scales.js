@@ -90,21 +90,45 @@ const returnScale = scaleName => {
   }
 }
 
-export const drawScale = (canvasRef, scale, key, showNotes, highlighted) => {
+export const drawScale = (canvasRef, scale, key, showNotes, highlighted, betweenFrets) => {
   const ctx = canvasRef.current.getContext('2d')
 
-  let currentIndex = NOTES.findIndex(note => note === key)
-
+  // For major scale for instance [2, 2, 1, 2, 2, 2, 1]
   const scaleIntervals = returnScale(scale)
+
+  // Gets the notes of the scale
+  const notes = scaleNotes(key, scaleIntervals)
+
+  // How many halfnotes each note is from the key root
+  const halfNotes = getHalfNotes(scaleIntervals, notes)
+
+  // Draw scale
+  draw(ctx, key, halfNotes, notes, showNotes, highlighted)
+}
+
+
+
+export const scaleNotes = (key, scaleIntervals) => {
+  let currentIndex = NOTES.findIndex(note => note === key)
 
   const notes = scaleIntervals.map(interval => {
     currentIndex = currentIndex + interval < 12 ? currentIndex + interval : currentIndex + interval - 12
     return NOTES[currentIndex]
   })
 
+  return notes
+}
 
-  let halfNotes = {}
+export const triadFromNotes = notes => {
+  return [notes[notes.length - 1], notes[1], notes[3]]
+}
 
+export const seventhChordFromNotes = notes => {
+  return [notes[notes.length - 1], notes[1], notes[3], notes[5]]
+}
+
+export const getHalfNotes = (scaleIntervals, notes) => {
+  const halfNotes = {}
 
   for (let i = 0; i < scaleIntervals.length; i++) {
     if (i === 0)
@@ -113,9 +137,15 @@ export const drawScale = (canvasRef, scale, key, showNotes, highlighted) => {
       halfNotes[notes[i]] = scaleIntervals[i] + halfNotes[notes[i - 1]]
   }
 
+  return halfNotes
+}
 
-
+const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets = [0, 12]) => {
   for (const fret in fretboardPoints) {
+
+    if (parseInt(fret[1]) < betweenFrets[0] || parseInt(fret[1]) > betweenFrets[1])
+      continue
+
     let note = fretsToNotes[fret]
 
     if (notes.includes(note)) {
@@ -153,7 +183,7 @@ export const drawScale = (canvasRef, scale, key, showNotes, highlighted) => {
             drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1], 'white', 'black')
           else
             drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1])
-
     }
   }
 }
+

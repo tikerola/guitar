@@ -16,6 +16,9 @@ export default withRouter(function NavBar({ location }) {
           <li className={`nav-item ${location.pathname === '/Scales-Mastery' && 'active'}`}>
             <Link className="nav-link" to="Scales-Mastery">Scales</Link>
           </li>
+          <li className={`nav-item ${location.pathname === '/Ear-Training' && 'active'}`}>
+            <Link className="nav-link" to="Ear-Training">Ear Training</Link>
+          </li>
           <li className={`nav-item ${location.pathname === '/Interval-Mastery' && 'active'}`}>
             <Link className="nav-link" to="Interval-Mastery">Interval</Link>
           </li>

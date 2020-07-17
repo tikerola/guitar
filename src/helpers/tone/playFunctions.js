@@ -5,3 +5,9 @@ export const playNote = (note, length) => {
 
   synth.triggerAttackRelease(note, length);
 }
+
+export const playChord = (notes, length) => {
+  const polySynth = new Tone.PolySynth().toMaster()
+
+  polySynth.triggerAttackRelease(notes, length)
+}

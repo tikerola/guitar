@@ -40,7 +40,7 @@ export default function InfoBar() {
 
       <div className="pl-3 pr-3 pb-3">
         If you wish to see which notes make up a triad chord, you can able highlighted mode below.
-        Root is colored red and 3rd's and 5th's are blue. Can you see familiar chord shapes?
+        Root is colored red and 3rd's and 5th's are blue. Can you see familiar chord shapes (C, A, G, E, D)?
         
       </div>
 

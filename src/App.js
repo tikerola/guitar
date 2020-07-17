@@ -3,6 +3,7 @@ import './App.css';
 import FretboardMastery from './pages/FretboardMastery'
 import IntervalMastery from './pages/IntervalMastery'
 import ScalesMastery from './pages/ScalesMastery'
+import EarTraining from './pages/EarTraining'
 import NavBar from './components/NavBar'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './pages/Home';
@@ -18,6 +19,7 @@ function App() {
         <Route path="/Fretboard-Mastery" component={FretboardMastery} />
         <Route path="/Interval-Mastery" component={IntervalMastery} />
         <Route path="/Scales-Mastery" component={ScalesMastery} />
+        <Route path="/Ear-Training" component={EarTraining} />
         <Route exact path="/" component={Home} />
       </Router>
       <div className="fixed-bottom">
