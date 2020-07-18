@@ -1,8 +1,4 @@
 
-import { drawNote } from '../drawFunctions/drawFunctions'
-import { fretboardPoints } from '../fretboardPoints'
-import { fretsToNotes } from '../fretsToNotes'
-
 import {
   MAJOR_TRIAD,
   MINOR_TRIAD,
@@ -18,11 +14,10 @@ import {
   MAJOR_BLUES,
   MINOR_BLUES,
   NOTES,
-  NOTESOBJ,
-  SCALE_DEGREES
+  NOTESOBJ
 } from './constants'
 
-let triad = ''
+export let triad = ''
 
 
 export const getScaleIntervals = scaleName => {
@@ -75,22 +70,6 @@ export const getScaleIntervals = scaleName => {
       triad = MINOR_TRIAD
       return MINOR_SCALE
   }
-}
-
-export const drawScale = (canvasRef, scale, key, showNotes, highlighted, betweenFrets) => {
-  const ctx = canvasRef.current.getContext('2d')
-
-  // For major scale for instance [2, 2, 1, 2, 2, 2, 1]
-  const scaleIntervals = getScaleIntervals(scale)
-
-  // Gets the notes of the scale
-  const notes = getScaleNotes(key, scaleIntervals)
-
-  // How many halfnotes each note is from the key root
-  const halfNotes = getHalfNotes(scaleIntervals, notes)
-
-  // Draw scale
-  draw(ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets)
 }
 
 
@@ -177,52 +156,5 @@ export const getHalfNotes = (scaleIntervals, notes) => {
   return halfNotes
 }
 
-const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets = [0, 12]) => {
-  for (const fret in fretboardPoints) {
 
-    const fretNum = fret.substring(1)
-
-    if (parseInt(fretNum) < betweenFrets[0] || parseInt(fretNum) > betweenFrets[1])
-      continue
-
-    let note = fretsToNotes[fret]
-
-    if (notes.includes(note)) {
-      if (note === key) {
-        if (showNotes)
-          drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note, 'red', 'white')
-        else
-          drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, 'R', 'red', 'white')
-      }
-
-      else if (triad.includes(SCALE_DEGREES[halfNotes[note] - 1]))
-        if (showNotes)
-          if (highlighted)
-            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note, 'blue', 'white')
-          else
-            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note)
-
-        else {
-          if (highlighted)
-            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1], 'blue', 'white')
-          else
-            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1])
-        }
-
-      else
-        if (showNotes)
-          if (highlighted)
-            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note, 'white', 'black')
-
-          else
-            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, note)
-
-        else
-          if (highlighted)
-            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1], 'white', 'black')
-          else
-            drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, SCALE_DEGREES[halfNotes[note] - 1])
-    }
-  }
-}
 

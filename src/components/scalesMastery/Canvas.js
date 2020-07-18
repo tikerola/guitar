@@ -5,7 +5,7 @@ import { inWhichFret, onMouseDownCoordinates } from '../../helpers/fretboardHitp
 import { fretboardPoints } from '../../helpers/fretboardPoints'
 import { fretsToNotes } from '../../helpers/fretsToNotes'
 import { pitches } from '../../helpers/pitches'
-import { drawScale } from '../../helpers/scales/scales'
+import { drawScale } from '../../helpers/drawFunctions/drawFunctions'
 import { ScalesContext } from '../../pages/ScalesMastery'
 
 

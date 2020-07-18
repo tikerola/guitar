@@ -7,13 +7,15 @@ import { pitches } from '../../helpers/pitches'
 import { playNote } from '../../helpers/tone/playFunctions'
 
 
-export default function Canvas() {
+export default function Canvas({ setRef }) {
 
   const canvasRef = useRef()
   const fretboardRef = useRef()
 
   useEffect(() => {
     initializeFretboard(canvasRef, fretboardRef)
+    setRef(canvasRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // const isNote = fret => fretsToNotes[fret]
