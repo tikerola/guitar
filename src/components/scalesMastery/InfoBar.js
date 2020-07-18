@@ -27,7 +27,7 @@ export default function InfoBar() {
   return (
     <div className="container pt-3">
       <h2 className="text-center">Scales Mastery</h2>
-      <p className="pl-3 pt-3 pr-3">
+      <p className="pl-3 pt-2 pr-3">
         Scale is an ordered sequence of notes.
         Once you have chosen a scale of your choice, you can toggle between notes and scale degrees.
         Letter (R) represents the root of the scale.
@@ -65,17 +65,19 @@ export default function InfoBar() {
           <span className="ml-3 font-weight-bolder">Highlighted</span>
 
         </label>
+        </div>
+        <div className="pl-3 pr-3 pb-3">
+          
+          You can isolate a part of the fretboard adjusting the slider below.
 
-        <Slider
-        connect
-        onSlide={handleSlide}
-        start={state.betweenFrets}
-        range={{ min: 0, max: 12 }}
-      />
-
-      </div>
-
-
+          <Slider
+            connect
+            onSlide={handleSlide}
+            start={state.betweenFrets}
+            range={{ min: 0, max: 12 }}
+          />
+        </div>
+      
     </div>
   )
 }

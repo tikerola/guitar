@@ -8,7 +8,7 @@ const initialState = {
   key: 'A',
   showNotes: false,
   highlighted: false,
-  betweenFrets: [0, 12]
+  betweenFrets: [5, 8]
 }
 
 const reducer = (state, action) => {
