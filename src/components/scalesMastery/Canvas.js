@@ -19,8 +19,8 @@ export default function Canvas() {
   const fretboardRef = useRef()
 
   useEffect(() => {
-    initializeFretboard(canvasRef, fretboardRef, () => drawScale(canvasRef, state.scale, state.key, state.showNotes, state.highlighted))
-  }, [state.key, state.scale, state.showNotes, state.highlighted])
+    initializeFretboard(canvasRef, fretboardRef, () => drawScale(canvasRef, state.scale, state.key, state.showNotes, state.highlighted, state.betweenFrets))
+  }, [state.key, state.scale, state.showNotes, state.highlighted, state.betweenFrets])
 
   // const isNote = fret => fretsToNotes[fret]
 

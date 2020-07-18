@@ -7,7 +7,8 @@ const initialState = {
   scale: 'minor blues',
   key: 'A',
   showNotes: false,
-  highlighted: false
+  highlighted: false,
+  betweenFrets: [0, 12]
 }
 
 const reducer = (state, action) => {
@@ -33,6 +34,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         highlighted: action.payload
+      }
+
+    case 'SET_BETWEEN_FRETS':
+      return {
+        ...state,
+        betweenFrets: action.payload
       }
 
     default:

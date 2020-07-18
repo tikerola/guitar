@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import "shards-ui/dist/css/shards.min.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';

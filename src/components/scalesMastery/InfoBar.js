@@ -1,6 +1,7 @@
 
 import React, { useContext } from 'react'
 import Switch from 'react-switch'
+import { Slider } from "shards-react";
 import { ScalesContext } from '../../pages/ScalesMastery'
 
 
@@ -14,6 +15,13 @@ export default function InfoBar() {
 
   const handleHighlighted = checked => {
     dispatch({ type: 'HIGHLIGHT', payload: checked })
+  }
+
+  const handleSlide = e => {
+    const start = e[0]
+    const end = e[1]
+
+    dispatch({ type: 'SET_BETWEEN_FRETS', payload: [start, end]})
   }
 
   return (
@@ -57,6 +65,13 @@ export default function InfoBar() {
           <span className="ml-3 font-weight-bolder">Highlighted</span>
 
         </label>
+
+        <Slider
+        connect
+        onSlide={handleSlide}
+        start={state.betweenFrets}
+        range={{ min: 0, max: 12 }}
+      />
 
       </div>
 

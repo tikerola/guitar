@@ -103,7 +103,7 @@ export const drawScale = (canvasRef, scale, key, showNotes, highlighted, between
   const halfNotes = getHalfNotes(scaleIntervals, notes)
 
   // Draw scale
-  draw(ctx, key, halfNotes, notes, showNotes, highlighted)
+  draw(ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets)
 }
 
 
@@ -143,7 +143,9 @@ export const getHalfNotes = (scaleIntervals, notes) => {
 const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets = [0, 12]) => {
   for (const fret in fretboardPoints) {
 
-    if (parseInt(fret[1]) < betweenFrets[0] || parseInt(fret[1]) > betweenFrets[1])
+    const fretNum = fret.substring(1)
+
+    if (parseInt(fretNum) < betweenFrets[0] || parseInt(fretNum) > betweenFrets[1])
       continue
 
     let note = fretsToNotes[fret]
