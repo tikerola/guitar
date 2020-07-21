@@ -17,14 +17,6 @@ export default function ScaleSelects() {
     dispatch({ type: 'SET_SCALE', payload: scale })
   }
 
-  const handleSlide = e => {
-
-    const start = e[0]
-    const end = e[1]
-
-    dispatch({ type: 'SET_BETWEEN_STRINGS', payload: [start, end] })
-  }
-
 
   return (
     <div className="container d-flex flex-row justify-content-around">
@@ -78,15 +70,6 @@ export default function ScaleSelects() {
           <Button className="col" active={state.scale === 'minor blues'} handleClick={() => handleScaleChange('minor blues')}>Blues Minor</Button>
         </div>
       </div>
-
-      <Slider
-        className="h-auto"
-        connect
-        onSlide={handleSlide}
-        start={state.betweenStrings}
-        range={{ min: 1, max: 6 }}
-        orientation="vertical"
-      />
 
     </div>
   )

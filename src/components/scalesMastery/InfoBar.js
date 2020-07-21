@@ -1,7 +1,7 @@
 
 import React, { useContext } from 'react'
 import Switch from 'react-switch'
-import { Slider } from "shards-react";
+
 import { ScalesContext } from '../../pages/ScalesMastery'
 
 
@@ -17,12 +17,6 @@ export default function InfoBar() {
     dispatch({ type: 'HIGHLIGHT', payload: checked })
   }
 
-  const handleSlide = e => {
-    const start = e[0]
-    const end = e[1]
-
-    dispatch({ type: 'SET_BETWEEN_FRETS', payload: [start, end]})
-  }
 
   return (
     <div className="container pt-3">
@@ -32,7 +26,7 @@ export default function InfoBar() {
         Once you have chosen a scale of your choice, you can toggle between notes and scale degrees.
         Letter (R) represents the root of the scale.
       </p>
-      <div className="pl-3 pr-3 pb-3">
+      <div className="pl-3 pr-3 pb-2">
         <label className="d-flex flex-row">
           <span className="mr-3 font-weight-bolder">Scale Degrees</span>
           <Switch
@@ -52,7 +46,7 @@ export default function InfoBar() {
         
       </div>
 
-      <div className="pl-3 pr-3 pb-3">
+      <div className="pl-3 pr-3 pb-2">
         <label className="d-flex flex-row">
           <span className="mr-3 font-weight-bolder">Normal View</span>
           <Switch
@@ -66,16 +60,11 @@ export default function InfoBar() {
 
         </label>
         </div>
-        <div className="pl-3 pr-3 pb-3">
+        <div className="pl-3 pr-3">
           
-          You can isolate a part of the fretboard adjusting the sliders left and below.
+          You can isolate a part of the fretboard adjusting the sliders below and right of the fretboard.
 
-          <Slider
-            connect
-            onSlide={handleSlide}
-            start={state.betweenFrets}
-            range={{ min: 0, max: 12 }}
-          />
+        
         </div>
       
     </div>
