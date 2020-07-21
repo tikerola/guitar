@@ -11,7 +11,7 @@ import {
 
 import { fretsToNotes } from '../../helpers/fretsToNotes'
 import * as Tone from 'tone'
-import { pitches } from '../../helpers/pitches'
+import { FRETS_TO_PITCHES } from '../../helpers/pitches'
 import { inWhichFret } from '../../helpers/fretboardHitpoints'
 import { FretboardMasteryCtx } from '../../pages/FretboardMastery'
 
@@ -100,7 +100,7 @@ export default function Canvas() {
       // Connect to the speakers.
       synth.toMaster();
 
-      synth.triggerAttackRelease(pitches[fret], '4n')
+      synth.triggerAttackRelease(FRETS_TO_PITCHES[fret], '4n')
       drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'black', 'white');
 
       if (fretsToNotes[fret] === state.noteToQuess)

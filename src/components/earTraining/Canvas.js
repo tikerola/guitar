@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import { drawBackgroundWithDelay, drawNote, initializeFretboard } from '../../helpers/drawFunctions/drawFunctions'
 import { inWhichFret, onMouseDownCoordinates } from '../../helpers/fretboardHitpoints'
-import { fretboardPoints } from '../../helpers/fretboardPoints'
 import { fretsToNotes } from '../../helpers/fretsToNotes'
-import { pitches } from '../../helpers/pitches'
+import { FRETS_TO_PITCHES } from '../../helpers/pitches'
 import { playNote } from '../../helpers/tone/playFunctions'
 
 
@@ -28,8 +27,8 @@ export default function Canvas({ setRef }) {
 
     if (fret) {
 
-      playNote(pitches[fret], '4n')
-      drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret]);
+      playNote(FRETS_TO_PITCHES[fret], '4n')
+      drawNote(ctx, fret, fretsToNotes[fret]);
       drawBackgroundWithDelay(ctx, fretboardRef, 500)
     }
   }

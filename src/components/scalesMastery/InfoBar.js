@@ -68,7 +68,7 @@ export default function InfoBar() {
         </div>
         <div className="pl-3 pr-3 pb-3">
           
-          You can isolate a part of the fretboard adjusting the slider below.
+          You can isolate a part of the fretboard adjusting the sliders left and below.
 
           <Slider
             connect

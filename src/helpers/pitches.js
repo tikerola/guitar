@@ -1,5 +1,5 @@
 
-export const pitches = {
+export const FRETS_TO_PITCHES = {
   'E0': 'E2',
   'E1': 'F2',
   'E2': 'F#2',
@@ -83,5 +83,12 @@ export const pitches = {
   'e10': 'D5',
   'e11': 'D#5',
   'e12': 'E5'
-
 }
+
+const PITCHES_TO_FRETS = {}
+
+for (let key in FRETS_TO_PITCHES) {
+  PITCHES_TO_FRETS[FRETS_TO_PITCHES[key]] = key
+}
+
+export { PITCHES_TO_FRETS }

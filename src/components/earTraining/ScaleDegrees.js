@@ -1,19 +1,30 @@
 import React, { useContext } from 'react'
 import Button from '../Button'
 import { EarTrainingCtx } from '../../pages/EarTraining'
+import { drawNote } from '../../helpers/drawFunctions/drawFunctions'
+import { PITCHES_TO_FRETS } from '../../helpers/pitches'
 
 
 
 
-export default function ScaleDegrees() {
+export default function ScaleDegrees({ canvasRef }) {
 
   const [state, dispatch] = useContext(EarTrainingCtx)
 
   const handleClick = value => {
     const quessedNote = state.scaleNotes[value]
 
-    if (quessedNote === state.note.substring(0, 1))
-      console.log('Bulls Eye')
+    let randomNote = ''
+    if (isNaN(parseInt(state.note[1])))
+      randomNote = state.note.substring(0, 2)
+
+    else
+      randomNote = state.note.substring(0, 1)
+
+    console.log(quessedNote, randomNote)
+
+    if (quessedNote === randomNote)
+      drawNote(canvasRef.current.getContext('2d'), PITCHES_TO_FRETS[`${quessedNote}3`], quessedNote)
 
     else
       console.log('You Suck', quessedNote, state.note)

@@ -4,7 +4,7 @@ import { drawBackgroundWithDelay, drawNote, initializeFretboard } from '../../he
 import { inWhichFret, onMouseDownCoordinates } from '../../helpers/fretboardHitpoints'
 import { fretboardPoints } from '../../helpers/fretboardPoints'
 import { fretsToNotes } from '../../helpers/fretsToNotes'
-import { pitches } from '../../helpers/pitches'
+import { FRETS_TO_PITCHES } from '../../helpers/pitches'
 import { drawScale } from '../../helpers/drawFunctions/drawFunctions'
 import { ScalesContext } from '../../pages/ScalesMastery'
 
@@ -19,8 +19,8 @@ export default function Canvas() {
   const fretboardRef = useRef()
 
   useEffect(() => {
-    initializeFretboard(canvasRef, fretboardRef, () => drawScale(canvasRef, state.scale, state.key, state.showNotes, state.highlighted, state.betweenFrets))
-  }, [state.key, state.scale, state.showNotes, state.highlighted, state.betweenFrets])
+    initializeFretboard(canvasRef, fretboardRef, () => drawScale(canvasRef, state.scale, state.key, state.showNotes, state.highlighted, false, state.betweenFrets, state.betweenStrings))
+  }, [state.key, state.scale, state.showNotes, state.highlighted, state.betweenFrets, state.betweenStrings])
 
   // const isNote = fret => fretsToNotes[fret]
 
@@ -31,7 +31,7 @@ export default function Canvas() {
     const fret = inWhichFret(x, y)
 
     if (fret) {
-      playNote(pitches[fret], '4n')
+      playNote(FRETS_TO_PITCHES[fret], '4n')
       drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret]);
       drawBackgroundWithDelay(ctx, fretboardRef, 500)
     }

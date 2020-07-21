@@ -8,7 +8,8 @@ const initialState = {
   key: 'A',
   showNotes: false,
   highlighted: false,
-  betweenFrets: [5, 8]
+  betweenFrets: [0, 12],
+  betweenStrings: [1, 6]
 }
 
 const reducer = (state, action) => {
@@ -40,6 +41,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         betweenFrets: action.payload
+      }
+
+    case 'SET_BETWEEN_STRINGS':
+      return {
+        ...state,
+        betweenStrings: action.payload
       }
 
     default:

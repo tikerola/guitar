@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
 import Button from '../Button'
 import { ScalesContext } from '../../pages/ScalesMastery'
+import { Slider } from "shards-react";
+
+
 
 export default function ScaleSelects() {
 
@@ -14,6 +17,15 @@ export default function ScaleSelects() {
     dispatch({ type: 'SET_SCALE', payload: scale })
   }
 
+  const handleSlide = e => {
+
+    const start = e[0]
+    const end = e[1]
+
+    dispatch({ type: 'SET_BETWEEN_STRINGS', payload: [start, end] })
+  }
+
+
   return (
     <div className="container d-flex flex-row justify-content-around">
 
@@ -23,23 +35,25 @@ export default function ScaleSelects() {
           <Button className="col" width="70px" active={state.key === 'C'} handleClick={() => handleClick('C')}>C</Button>
           <Button className="col" width="70px" active={state.key === 'C#'} handleClick={() => handleClick('C#')}>C#</Button>
           <Button className="col" width="70px" active={state.key === 'D'} handleClick={() => handleClick('D')}>D</Button>
-          <Button className="col" width="70px" active={state.key === 'D#'} handleClick={() => handleClick('D#')}>D#</Button>
         </div>
 
         <div className="row">
+          <Button className="col" width="70px" active={state.key === 'D#'} handleClick={() => handleClick('D#')}>D#</Button>
           <Button className="col" width="70px" active={state.key === 'E'} handleClick={() => handleClick('E')}>E</Button>
           <Button className="col" width="70px" active={state.key === 'F'} handleClick={() => handleClick('F')}>F</Button>
-          <Button className="col" width="70px" active={state.key === 'F#'} handleClick={() => handleClick('F#')}>F#</Button>
-          <Button className="col" width="70px" active={state.key === 'G'} handleClick={() => handleClick('G')}>G</Button>
         </div>
 
         <div className="row">
+          <Button className="col" width="70px" active={state.key === 'F#'} handleClick={() => handleClick('F#')}>F#</Button>
+          <Button className="col" width="70px" active={state.key === 'G'} handleClick={() => handleClick('G')}>G</Button>
           <Button className="col" width="70px" active={state.key === 'G#'} handleClick={() => handleClick('G#')}>G#</Button>
+        </div>
+
+        <div className="row">
           <Button className="col" width="70px" active={state.key === 'A'} handleClick={() => handleClick('A')}>A</Button>
           <Button className="col" width="70px" active={state.key === 'A#'} handleClick={() => handleClick('A#')}>A#</Button>
           <Button className="col" width="70px" active={state.key === 'B'} handleClick={() => handleClick('B')}>B</Button>
         </div>
-
       </div>
 
       <div >
@@ -49,7 +63,6 @@ export default function ScaleSelects() {
           <Button className="col" active={state.scale === 'minor scale'} handleClick={() => handleScaleChange('minor scale')}>Minor</Button>
           <Button className="col" active={state.scale === 'major pentatonic'} handleClick={() => handleScaleChange('major pentatonic')}>Maj Pentatonic</Button>
         </div>
-
         <div className="row">
           <Button className="col" active={state.scale === 'minor pentatonic'} handleClick={() => handleScaleChange('minor pentatonic')}>Min Pentatonic</Button>
           <Button className="col" active={state.scale === 'dorian'} handleClick={() => handleScaleChange('dorian')}>Dorian</Button>
@@ -60,14 +73,20 @@ export default function ScaleSelects() {
           <Button className="col" active={state.scale === 'mixolydian'} handleClick={() => handleScaleChange('mixolydian')}>Mixolydian</Button>
           <Button className="col" active={state.scale === 'locrian'} handleClick={() => handleScaleChange('locrian')}>Locrian</Button>
         </div>
-
         <div className="row">
           <Button className="col" active={state.scale === 'major blues'} handleClick={() => handleScaleChange('major blues')}>Blues Major</Button>
           <Button className="col" active={state.scale === 'minor blues'} handleClick={() => handleScaleChange('minor blues')}>Blues Minor</Button>
-
         </div>
-
       </div>
+
+      <Slider
+        className="h-auto"
+        connect
+        onSlide={handleSlide}
+        start={state.betweenStrings}
+        range={{ min: 1, max: 6 }}
+        orientation="vertical"
+      />
 
     </div>
   )

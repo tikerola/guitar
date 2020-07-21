@@ -6,6 +6,8 @@ import { fretsToNotes } from '../fretsToNotes'
 import { fretboardPoints } from '../fretboardPoints'
 import { triad } from '../scales/scales'
 
+const stringToANumber = { 'e': 1, 'B': 2, 'G': 3, 'D': 4, 'A': 5, 'E': 6 }
+
 export const drawBackgroundWithDelay = (ctx, imageRef, ms) => {
   setTimeout(() => {
     ctx.drawImage(imageRef.current, 0, 0)
@@ -57,7 +59,7 @@ export const initializeFretboard = (canvasRef, fretboardRef, cb) => {
   }
 }
 
-export const drawScale = (canvasRef, scale, key, showNotes, highlighted, betweenFrets) => {
+export const drawScale = (canvasRef, scale, key, showNotes, highlighted, blank, betweenFrets, betweenStrings) => {
   const ctx = canvasRef.current.getContext('2d')
 
   // For major scale for instance [2, 2, 1, 2, 2, 2, 1]
@@ -70,21 +72,46 @@ export const drawScale = (canvasRef, scale, key, showNotes, highlighted, between
   const halfNotes = getHalfNotes(scaleIntervals, notes)
 
   // Draw scale
-  draw(ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets)
+  draw(ctx, key, halfNotes, notes, showNotes, highlighted, blank, betweenFrets, betweenStrings)
 }
 
 
-const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets = [0, 12]) => {
+const isBetweenFrets = (fret, betweenFrets) => {
+  const fretNum = fret.substring(1)
+
+  if (parseInt(fretNum) < betweenFrets[0] || parseInt(fretNum) > betweenFrets[1])
+    return false
+
+  return true
+}
+
+const isBetweenStrings = (fret, betweenStrings) => {
+  const string = fret.substring(0, 1)
+
+  if (stringToANumber[string] < betweenStrings[0] || stringToANumber[string] > betweenStrings[1])
+    return false
+
+  return true
+}
+
+
+const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, blank, betweenFrets = [0, 12], betweenStrings = [1, 6]) => {
   for (const fret in fretboardPoints) {
 
-    const fretNum = fret.substring(1)
-
-    if (parseInt(fretNum) < betweenFrets[0] || parseInt(fretNum) > betweenFrets[1])
+    // Don't bother drawing if outside of fret boundaries
+    if (!isBetweenFrets(fret, betweenFrets))
       continue
 
-    let note = fretsToNotes[fret]
+    if (!isBetweenStrings(fret, betweenStrings))
+      continue
 
+    const note = fretsToNotes[fret]
+    const scaleDegree = SCALE_DEGREES[halfNotes[note] - 1]
+
+    // from all fretboard notes, is this in scale
     if (notes.includes(note)) {
+
+      // root note?
       if (note === key) {
         if (showNotes)
           drawNote(ctx, fret, note, 'red', 'white')
@@ -92,7 +119,12 @@ const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets =
           drawNote(ctx, fret, 'R', 'red', 'white')
       }
 
-      else if (triad.includes(SCALE_DEGREES[halfNotes[note] - 1]))
+      else if (blank) {
+        drawNote(ctx, fret, '', 'white', 'black')
+      }
+
+      // not root, but 3rd or 5th
+      else if (triad.includes(scaleDegree))
         if (showNotes)
           if (highlighted)
             drawNote(ctx, fret, note, 'blue', 'white')
@@ -101,11 +133,12 @@ const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets =
 
         else {
           if (highlighted)
-            drawNote(ctx, fret, SCALE_DEGREES[halfNotes[note] - 1], 'blue', 'white')
+            drawNote(ctx, fret, scaleDegree, 'blue', 'white')
           else
-            drawNote(ctx, fret, SCALE_DEGREES[halfNotes[note] - 1])
+            drawNote(ctx, fret, scaleDegree)
         }
 
+      // scale notes other than 1, 3 or 5
       else
         if (showNotes)
           if (highlighted)
@@ -116,9 +149,9 @@ const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, betweenFrets =
 
         else
           if (highlighted)
-            drawNote(ctx, fret, SCALE_DEGREES[halfNotes[note] - 1], 'white', 'black')
+            drawNote(ctx, fret, scaleDegree, 'white', 'black')
           else
-            drawNote(ctx, fret, SCALE_DEGREES[halfNotes[note] - 1])
+            drawNote(ctx, fret, scaleDegree)
     }
   }
 }

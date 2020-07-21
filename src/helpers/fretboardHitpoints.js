@@ -3,13 +3,15 @@ import { FRET_WIDTH, fretboardPoints as fP } from './fretboardPoints'
 const Y_MARGIN = 10
 
 
-export const inWhichFret = (x, y) => {
+export const inWhichFret = (x, y, stringY) => {
+
   for (const fret in fP) {
-    if (fP[fret].x > (x - FRET_WIDTH / 2) && fP[fret].x < (x + FRET_WIDTH / 2)) {
-      if (fP[fret].y > (y - Y_MARGIN) && fP[fret].y < (y + Y_MARGIN)) {
-        return fret
+    if (!stringY || (fP[fret].y > stringY - Y_MARGIN && fP[fret].y < stringY + Y_MARGIN))
+      if (fP[fret].x > (x - FRET_WIDTH / 2) && fP[fret].x < (x + FRET_WIDTH / 2)) {
+        if (fP[fret].y > (y - Y_MARGIN) && fP[fret].y < (y + Y_MARGIN)) {
+          return fret
+        }
       }
-    }
   }
 
   return false
