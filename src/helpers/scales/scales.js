@@ -14,7 +14,8 @@ import {
   MAJOR_BLUES,
   MINOR_BLUES,
   NOTES,
-  NOTESOBJ
+  NOTESOBJ,
+  SCALE_DEGREES
 } from './constants'
 
 export let triad = ''
@@ -142,6 +143,13 @@ export const getPreviousAndNextPitch = (rootPitch, note) => {
   return pitches
 }
 
+export const scaleDegreeFromANote = (key, note) => {
+
+  const halfNoteDifference = NOTESOBJ[key] <= NOTESOBJ[note] ? NOTESOBJ[note] - NOTESOBJ[key] : 12 - NOTESOBJ[key] + NOTESOBJ[note]
+
+  return halfNoteDifference ? SCALE_DEGREES[halfNoteDifference - 1] : '0'
+
+}
 
 export const getHalfNotes = (scaleIntervals, notes) => {
   const halfNotes = {}

@@ -14,6 +14,12 @@ export const drawBackgroundWithDelay = (ctx, imageRef, ms) => {
   }, ms)
 }
 
+export const drawFrets = (ctx, frets) => {
+  for (const fret of frets) {
+    drawNote(ctx, fret, fretsToNotes[fret])
+  }
+}
+
 export const drawNote = (ctx, fret, note, bgColor = 'black', color = 'white') => {
   const x = fretboardPoints[fret].x
   const y = fretboardPoints[fret].y
@@ -72,7 +78,7 @@ export const drawScale = (canvasRef, scale, key, showNotes, highlighted, blank, 
   const halfNotes = getHalfNotes(scaleIntervals, notes)
 
   // Draw scale
-  draw(ctx, key, halfNotes, notes, showNotes, highlighted, blank, betweenFrets, betweenStrings)
+  return draw(ctx, key, halfNotes, notes, showNotes, highlighted, blank, betweenFrets, betweenStrings)
 }
 
 
@@ -96,6 +102,9 @@ const isBetweenStrings = (fret, betweenStrings) => {
 
 
 const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, blank, betweenFrets = [0, 12], betweenStrings = [1, 6]) => {
+
+  const drawnFrets = []
+
   for (const fret in fretboardPoints) {
 
     // Don't bother drawing if outside of fret boundaries
@@ -110,6 +119,8 @@ const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, blank, between
 
     // from all fretboard notes, is this in scale
     if (notes.includes(note)) {
+
+      drawnFrets.push(fret)
 
       // root note?
       if (note === key) {
@@ -154,4 +165,6 @@ const draw = (ctx, key, halfNotes, notes, showNotes, highlighted, blank, between
             drawNote(ctx, fret, scaleDegree)
     }
   }
+
+  return drawnFrets
 }

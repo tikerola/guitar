@@ -5,17 +5,28 @@ import ScaleDegrees from '../components/earTraining/ScaleDegrees'
 import { drawScale } from '../helpers/drawFunctions/drawFunctions'
 import { FRETS_TO_PITCHES } from '../helpers/pitches'
 import { getScaleIntervals, getScaleNotes, triadPitchesFromRoot } from '../helpers/scales/scales'
-import { playChord, playRandomNote } from '../helpers/tone/playFunctions'
+import { playChord, playNote } from '../helpers/tone/playFunctions'
+import { fretsToNotes } from '../helpers/fretsToNotes'
 
 const initialState = {
-  scale: 'major',
+  scale: 'major scale',
   frets: ['E5', 'A5', 'D5', 'G5', 'B5'],
+  key: '',
   scaleNotes: [],
-  note: ''
+  note: '',
+  fretsDrawn: [],
+  pushedFret: '',
+  randomFret: '',
+  points: 0
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SET_KEY':
+      return {
+        ...state,
+        key: action.payload
+      }
     case 'SET_SCALE_NOTES':
       return {
         ...state,
@@ -26,6 +37,30 @@ const reducer = (state, action) => {
       return {
         ...state,
         note: action.payload
+      }
+
+    case 'SET_FRETS_DRAWN':
+      return {
+        ...state,
+        fretsDrawn: action.payload
+      }
+
+    case 'SET_PUSHED_FRET':
+      return {
+        ...state,
+        pushedFret: action.payload
+      }
+
+    case 'ADD_POINT':
+      return {
+        ...state,
+        poinst: state.points + 1
+      }
+
+    case 'SET_RANDOM_FRET':
+      return {
+        ...state,
+        randomFret: action.payload
       }
     default:
       return state
@@ -46,8 +81,9 @@ export default function IntervalMastery() {
   useEffect(() => {
     const handleKeyup = e => {
       if (e.keyCode === 32) {
-        const fret = state.frets[2]
-        const rootPitch = FRETS_TO_PITCHES[fret]
+        const rootFret = state.frets[2]
+        dispatch({ type: 'SET_KEY', payload: fretsToNotes[rootFret] })
+        const rootPitch = FRETS_TO_PITCHES[rootFret]
         const rootNote = rootPitch.substring(0, 1)
 
         const intervals = getScaleIntervals(state.scale)
@@ -56,12 +92,16 @@ export default function IntervalMastery() {
         const triadPitches = triadPitchesFromRoot(rootPitch, notes)
 
         playChord(triadPitches, '4n')
-        drawScale(canvasRef, state.scale, rootNote, false, false, true, [5, 8])
+        const fretsDrawn = drawScale(canvasRef, state.scale, rootNote, false, false, true, [3, 8])
+        const randomFret = getRandomFret(fretsDrawn)
+        dispatch({ type: 'SET_RANDOM_FRET', payload: randomFret })
+
+        dispatch({ type: 'SET_FRETS_DRAWN', payload: fretsDrawn })
+
 
         setTimeout(() => {
-          const randomNote = playRandomNote(notes, rootPitch, '4n')
-          console.log(randomNote)
-          dispatch({ type: 'SET_NOTE', payload: randomNote })
+          playNote(FRETS_TO_PITCHES[randomFret], '4n')
+
         }, 1300)
       }
     }
@@ -73,6 +113,10 @@ export default function IntervalMastery() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const getRandomFret = frets => {
+    return frets[Math.floor(Math.random() * frets.length - 1)]
+  }
 
   return (
     <div>
