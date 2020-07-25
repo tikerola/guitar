@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
-import Button from '../Button'
-import { ScalesContext } from '../../pages/ScalesMastery'
-import { Slider } from "shards-react";
+import React, { useContext } from 'react';
+import { ScalesContext } from '../../pages/ScalesMastery';
+import Button from '../Button';
 
 
 

@@ -18,24 +18,35 @@ const strings = ['E', 'A', 'D', 'G', 'B', 'e']
 // Initiation not necessary but gives an idea how points are constructed
 
 const fretboardPoints = {
-  'E0': { x: ZERO_FRET_X, y: E_FRET_HEIGHT },
-  'A0': { x: ZERO_FRET_X, y: A_FRET_HEIGHT },
-  'D0': { x: ZERO_FRET_X, y: D_FRET_HEIGHT },
-  'G0': { x: ZERO_FRET_X, y: G_FRET_HEIGHT },
-  'B0': { x: ZERO_FRET_X, y: B_FRET_HEIGHT },
-  'e0': { x: ZERO_FRET_X, y: e_FRET_HEIGHT },
+  // 'E0': { x: ZERO_FRET_X, y: E_FRET_HEIGHT },
+  // 'A0': { x: ZERO_FRET_X, y: A_FRET_HEIGHT },
+  // 'D0': { x: ZERO_FRET_X, y: D_FRET_HEIGHT },
+  // 'G0': { x: ZERO_FRET_X, y: G_FRET_HEIGHT },
+  // 'B0': { x: ZERO_FRET_X, y: B_FRET_HEIGHT },
+  // 'e0': { x: ZERO_FRET_X, y: e_FRET_HEIGHT },
 }
 
 
 // Let's initiate fretboard circles for every note up until 12th fret
 
 for (let stringIndex = 0; stringIndex < strings.length; stringIndex++) {
-  for (let nthFret = 1; nthFret <= 12; nthFret++) {
+  for (let nthFret = 0; nthFret <= 12; nthFret++) {
     fretboardPoints[`${strings[stringIndex]}${nthFret}`] = {
-      x: fretboardPoints[`${strings[stringIndex]}${nthFret - 1}`].x + FRET_WIDTH,
+      x: nthFret > 0 ? fretboardPoints[`${strings[stringIndex]}${nthFret - 1}`].x + FRET_WIDTH : ZERO_FRET_X,
       y: E_FRET_HEIGHT - stringIndex * FRET_HEIGHT
     }
   }
 }
+
+// LEGACY
+
+// for (let stringIndex = 0; stringIndex < strings.length; stringIndex++) {
+//   for (let nthFret = 1; nthFret <= 12; nthFret++) {
+//     fretboardPoints[`${strings[stringIndex]}${nthFret}`] = {
+//       x: fretboardPoints[`${strings[stringIndex]}${nthFret - 1}`].x + FRET_WIDTH,
+//       y: E_FRET_HEIGHT - stringIndex * FRET_HEIGHT
+//     }
+//   }
+// }
 
 export { fretboardPoints }

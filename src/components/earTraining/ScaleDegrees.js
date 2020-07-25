@@ -1,33 +1,38 @@
 import React, { useContext } from 'react'
-import Button from '../Button'
+import { drawSequenceOfFrets, drawNote } from '../../helpers/drawFunctions/drawFunctions'
+import { fretsToNearestRoot } from '../../helpers/fretsToNearestRoot'
+import { playSequenceOfNotes } from '../../helpers/tone/playFunctions'
 import { EarTrainingCtx } from '../../pages/EarTraining'
-import { drawNote } from '../../helpers/drawFunctions/drawFunctions'
-import { PITCHES_TO_FRETS } from '../../helpers/pitches'
+import Button from '../Button'
+import { scaleDegreeFromANote } from '../../helpers/scales/scales'
+import { fretsToNotes } from '../../helpers/fretsToNotes'
 
 
-
-
-export default function ScaleDegrees({ canvasRef }) {
+export default function ScaleDegrees({ canvasRef, fretboardRef }) {
 
   const [state, dispatch] = useContext(EarTrainingCtx)
 
   const handleClick = value => {
+
+    if (!state.note)
+      return
+
+    const ctx = canvasRef.current.getContext('2d')
     const quessedNote = state.scaleNotes[value]
 
-    let randomNote = ''
-    if (isNaN(parseInt(state.note[1])))
-      randomNote = state.note.substring(0, 2)
+    if (quessedNote === state.note) {
+      const scaleDegree = scaleDegreeFromANote(state.key, fretsToNotes[state.randomFret])
+      const frets = fretsToNearestRoot(state.key, scaleDegree, state.randomFret, state.fretsDrawn)
+      drawNote(ctx, state.randomFret, scaleDegree !== '0' ? scaleDegree : '1', 'blue', 'white');
 
-    else
-      randomNote = state.note.substring(0, 1)
+      setTimeout(() => {
+        document.activeElement.blur()
+        playSequenceOfNotes(frets, 0.5)
+        drawSequenceOfFrets(ctx, state.key, frets, 500)
+        dispatch({ type: 'ADD_POINT' })
+      }, 0)
 
-    console.log(quessedNote, randomNote)
-
-    if (quessedNote === randomNote)
-      drawNote(canvasRef.current.getContext('2d'), PITCHES_TO_FRETS[`${quessedNote}3`], quessedNote)
-
-    else
-      console.log('You Suck', quessedNote, state.note)
+    }
   }
 
   return (

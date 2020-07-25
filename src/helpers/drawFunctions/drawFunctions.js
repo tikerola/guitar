@@ -1,6 +1,6 @@
 
 import { STRINGS, STRING_X_STARTING_COORDINATE, STRING_X_ENDING_COORDINATE, LETTER_HEIGHT_CORRECTION } from '../constants'
-import { getScaleIntervals, getScaleNotes, getHalfNotes } from '../scales/scales'
+import { getScaleIntervals, getScaleNotes, getHalfNotes, scaleDegreeFromANote } from '../scales/scales'
 import { SCALE_DEGREES } from '../scales/constants'
 import { fretsToNotes } from '../fretsToNotes'
 import { fretboardPoints } from '../fretboardPoints'
@@ -18,6 +18,23 @@ export const drawFrets = (ctx, frets) => {
   for (const fret of frets) {
     drawNote(ctx, fret, fretsToNotes[fret])
   }
+}
+
+export const drawSequenceOfFrets = (ctx, key, frets, timeBetween) => {
+  let index = 0
+
+  if (!frets.length)
+    return
+
+  const interval = setInterval(() => {
+    const scaleDegree = scaleDegreeFromANote(key, fretsToNotes[frets[index]])
+
+    drawNote(ctx, frets[index], scaleDegree === '0' ? 'R' : scaleDegree, 'blue', 'white')
+    if (index === frets.length - 1)
+      clearInterval(interval)
+
+    index++
+  }, timeBetween)
 }
 
 export const drawNote = (ctx, fret, note, bgColor = 'black', color = 'white') => {
@@ -76,6 +93,8 @@ export const drawScale = (canvasRef, scale, key, showNotes, highlighted, blank, 
 
   // How many halfnotes each note is from the key root
   const halfNotes = getHalfNotes(scaleIntervals, notes)
+
+
 
   // Draw scale
   return draw(ctx, key, halfNotes, notes, showNotes, highlighted, blank, betweenFrets, betweenStrings)

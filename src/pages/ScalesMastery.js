@@ -62,16 +62,16 @@ export default function ScalesMastery() {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const handleFretSlide = e => {
-    const start = e[0]
-    const end = e[1]
+    const start = parseInt(e[0])
+    const end = parseInt(e[1])
 
     dispatch({ type: 'SET_BETWEEN_FRETS', payload: [start, end] })
   }
 
   const handleStringSlide = e => {
 
-    const start = e[0]
-    const end = e[1]
+    const start = parseInt(e[0])
+    const end = parseInt(e[1])
 
     dispatch({ type: 'SET_BETWEEN_STRINGS', payload: [start, end] })
   }

@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useContext } from 'react'
-import { drawBackgroundWithDelay, drawNote, initializeFretboard } from '../../helpers/drawFunctions/drawFunctions'
+import React, { useContext, useEffect, useRef } from 'react'
+import { drawNote, drawSequenceOfFrets, initializeFretboard } from '../../helpers/drawFunctions/drawFunctions'
 import { inWhichFret, onMouseDownCoordinates } from '../../helpers/fretboardHitpoints'
 import { fretsToNotes } from '../../helpers/fretsToNotes'
 import { FRETS_TO_PITCHES } from '../../helpers/pitches'
+import { scaleDegreeFromANote } from '../../helpers/scales/scales'
 import { playNote, playSequenceOfNotes } from '../../helpers/tone/playFunctions'
 import { EarTrainingCtx } from '../../pages/EarTraining'
-import { scaleDegreeFromANote } from '../../helpers/scales/scales'
-import * as Tone from 'tone'
+import { fretsToNearestRoot } from '../../helpers/fretsToNearestRoot'
 
 
 export default function Canvas({ setRef }) {
@@ -18,7 +18,7 @@ export default function Canvas({ setRef }) {
 
   useEffect(() => {
     initializeFretboard(canvasRef, fretboardRef)
-    setRef(canvasRef.current)
+    setRef(canvasRef.current, fretboardRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -34,52 +34,33 @@ export default function Canvas({ setRef }) {
 
     if (fret) {
 
-      playNote(FRETS_TO_PITCHES[fret], '4n')
-      drawNote(ctx, fret, fretsToNotes[fret]);
+      const match = answerIsAMatch(fret, state.randomFret)
 
-      if (answerIsAMatch(fret, state.randomFret)) {
+      if (!match)
+        playNote(FRETS_TO_PITCHES[fret], '4n')
+
+      else {
         dispatch({ type: 'ADD_POINT' })
         const scaleDegree = scaleDegreeFromANote(state.key, fretsToNotes[fret])
-        const frets = fretsToNearestRoot(scaleDegree, fret, state.fretsDrawn)
+
+        if (scaleDegree === '0')
+          playNote(FRETS_TO_PITCHES[fret], '4n')
+
+        drawNote(ctx, fret, scaleDegree !== '0' ? scaleDegree : '1', 'blue', 'white');
+        const frets = fretsToNearestRoot(state.key, scaleDegree, fret, state.fretsDrawn)
 
         setTimeout(() => {
-          playSequenceOfNotes(frets, 1)
-        }, 500)
+          playSequenceOfNotes(frets, 0.5)
+          drawSequenceOfFrets(ctx, state.key, frets, 500)
+        }, 0)
       }
 
-
-      //drawBackgroundWithDelay(ctx, fretboardRef, 500)
     }
   }
 
-  const fretsToNearestRoot = (degree, fret, fretsDrawn) => {
-    const degreeNumber = degree.length === 1 ? parseInt(degree) : parseInt(degree.substring(1))
-
-    const frets = []
-    const index = fretsDrawn.findIndex(f => f === fret)
-
-    if (degreeNumber <= 4) {
-      // Let's go to the root 4, 3, 2, 1
-
-      for (let i = 0; i < degreeNumber; i++) {
-        frets.push(fretsDrawn[index - i])
-      }
-    }
-
-    else {
-      // 5, 6, 7, 1
-
-      for (let i = 0; i <= 8 - degreeNumber; i++) {
-        frets.push(fretsDrawn[index + i])
-      }
-
-    }
-
-    return frets
-  }
 
   const answerIsAMatch = (pushedFret, randomFret) => {
-    return pushedFret === randomFret
+    return FRETS_TO_PITCHES[pushedFret] === FRETS_TO_PITCHES[randomFret]
   }
 
   return (
@@ -93,3 +74,5 @@ export default function Canvas({ setRef }) {
     </div>
   )
 }
+
+

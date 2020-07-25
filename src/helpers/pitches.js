@@ -88,7 +88,11 @@ export const FRETS_TO_PITCHES = {
 const PITCHES_TO_FRETS = {}
 
 for (let key in FRETS_TO_PITCHES) {
-  PITCHES_TO_FRETS[FRETS_TO_PITCHES[key]] = key
+  if (!PITCHES_TO_FRETS[FRETS_TO_PITCHES[key]])
+    PITCHES_TO_FRETS[FRETS_TO_PITCHES[key]] = [key]
+
+  else
+    PITCHES_TO_FRETS[FRETS_TO_PITCHES[key]].push(key)
 }
 
 export { PITCHES_TO_FRETS }
