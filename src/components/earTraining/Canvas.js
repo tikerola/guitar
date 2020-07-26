@@ -43,16 +43,20 @@ export default function Canvas({ setRef }) {
         dispatch({ type: 'ADD_POINT' })
         const scaleDegree = scaleDegreeFromANote(state.key, fretsToNotes[fret])
 
-        if (scaleDegree === '0')
+        if (scaleDegree === '0' || state.scale === 'chromatic scale')
           playNote(FRETS_TO_PITCHES[fret], '4n')
 
         drawNote(ctx, fret, scaleDegree !== '0' ? scaleDegree : '1', 'blue', 'white');
-        const frets = fretsToNearestRoot(state.key, scaleDegree, fret, state.fretsDrawn)
 
-        setTimeout(() => {
-          playSequenceOfNotes(frets, 0.5)
-          drawSequenceOfFrets(ctx, state.key, frets, 500)
-        }, 0)
+        if (state.scale !== 'chromatic scale') {
+          const frets = fretsToNearestRoot(state.key, scaleDegree, fret, state.fretsDrawn)
+
+          setTimeout(() => {
+            playSequenceOfNotes(frets, 0.5)
+            drawSequenceOfFrets(ctx, state.key, frets, 500)
+          }, 0)
+        }
+
       }
 
     }

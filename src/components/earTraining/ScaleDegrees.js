@@ -18,19 +18,29 @@ export default function ScaleDegrees({ canvasRef, fretboardRef }) {
       return
 
     const ctx = canvasRef.current.getContext('2d')
-    const quessedNote = state.scaleNotes[value]
+    //const quessedNote = state.scaleNotes[value]
 
-    if (quessedNote === state.note) {
-      const scaleDegree = scaleDegreeFromANote(state.key, fretsToNotes[state.randomFret])
-      const frets = fretsToNearestRoot(state.key, scaleDegree, state.randomFret, state.fretsDrawn)
-      drawNote(ctx, state.randomFret, scaleDegree !== '0' ? scaleDegree : '1', 'blue', 'white');
+    let scaleDegree = scaleDegreeFromANote(state.key, fretsToNotes[state.randomFret])
 
-      setTimeout(() => {
-        document.activeElement.blur()
-        playSequenceOfNotes(frets, 0.5)
-        drawSequenceOfFrets(ctx, state.key, frets, 500)
-        dispatch({ type: 'ADD_POINT' })
-      }, 0)
+    if (state.scale !== 'chromatic scale') {
+      scaleDegree = scaleDegree.length === 1 ? scaleDegree : scaleDegree.substring(1)
+    }
+
+    if (scaleDegree === value.toString()) {
+
+      drawNote(ctx, state.randomFret, scaleDegree !== '0' ? scaleDegree : 'R', 'blue', 'white');
+      dispatch({ type: 'ADD_POINT' })
+
+      if (state.scale !== 'chromatic scale') {
+
+        const frets = fretsToNearestRoot(state.key, scaleDegree, state.randomFret, state.fretsDrawn)
+
+        setTimeout(() => {
+          document.activeElement.blur()
+          playSequenceOfNotes(frets, 0.5)
+          drawSequenceOfFrets(ctx, state.key, frets, 500)
+        }, 0)
+      }
 
     }
   }
@@ -41,13 +51,22 @@ export default function ScaleDegrees({ canvasRef, fretboardRef }) {
       <div >
         <h5 className="text-center font-weight-bolder">SCALE DEGREES</h5>
         <div className="row">
-          <Button className="col" width="100px" active={false} handleClick={() => handleClick(6)}>1</Button>
-          <Button className="col" width="100px" active={false} handleClick={() => handleClick(0)}>2</Button>
-          <Button className="col" width="100px" active={false} handleClick={() => handleClick(1)}>3</Button>
-          <Button className="col" width="100px" active={false} handleClick={() => handleClick(2)}>4</Button>
-          <Button className="col" width="100px" active={false} handleClick={() => handleClick(3)}>5</Button>
-          <Button className="col" width="100px" active={false} handleClick={() => handleClick(4)}>6</Button>
-          <Button className="col" width="100px" active={false} handleClick={() => handleClick(5)}>7</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick(0)}>1</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick(2)}>2</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick(3)}>3</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick(4)}>4</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick(5)}>5</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick(6)}>6</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick(7)}>7</Button>
+        </div>
+        <div className={`row ${state.scale === 'chromatic scale' ? 'visible' : 'visible'}`} style={{ paddingLeft: '58px' }}>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick('b2')}>b2</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick('b3')}>b3</Button>
+          <button className={`btn m-2`} style={{ width: '100px', cursor: 'default' }} disabled></button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick('b5')}>b5</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick('b6')}>b6</Button>
+          <Button className="col" width="100px" active={false} handleClick={() => handleClick('b7')}>b7</Button>
+
         </div>
       </div>
     </div>

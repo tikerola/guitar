@@ -15,7 +15,8 @@ import {
   MINOR_BLUES,
   NOTES,
   NOTESOBJ,
-  SCALE_DEGREES
+  SCALE_DEGREES,
+  CHROMATIC_SCALE
 } from './constants'
 
 export let triad = ''
@@ -34,6 +35,9 @@ export const getScaleIntervals = scaleName => {
     case 'major scale':
       triad = MAJOR_TRIAD
       return MAJOR_SCALE
+
+    case 'chromatic scale':
+      return CHROMATIC_SCALE
 
     case 'minor scale':
       triad = MINOR_TRIAD

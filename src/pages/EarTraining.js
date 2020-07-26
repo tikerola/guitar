@@ -7,9 +7,10 @@ import { fretsToNotes } from '../helpers/fretsToNotes'
 import { FRETS_TO_PITCHES } from '../helpers/pitches'
 import { getScaleIntervals, getScaleNotes, triadPitchesFromRoot } from '../helpers/scales/scales'
 import { playChord, playNote } from '../helpers/tone/playFunctions'
+import { Slider } from "shards-react";
 
 const initialState = {
-  scale: 'minor scale',
+  scale: 'chromatic scale',
   frets: ['E5', 'A5', 'D5', 'G5', 'B5'],
   key: '',
   scaleNotes: [],
@@ -17,7 +18,8 @@ const initialState = {
   fretsDrawn: [],
   pushedFret: '',
   randomFret: '',
-  points: 0
+  points: 0,
+  betweenFrets: [4, 8]
 }
 
 const reducer = (state, action) => {
@@ -67,6 +69,11 @@ const reducer = (state, action) => {
         ...state,
         randomFret: action.payload
       }
+    case 'SET_BETWEEN_FRETS':
+      return {
+        ...state,
+        betweenFrets: action.payload
+      }
     default:
       return state
   }
@@ -78,7 +85,7 @@ export default function IntervalMastery() {
 
   const canvasRef = useRef()
   const fretboardRef = useRef()
-  const scaleRef = useRef()
+  const stateRef = useRef()
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const setRef = (cRef, fRef) => {
@@ -87,8 +94,10 @@ export default function IntervalMastery() {
   }
 
   useEffect(() => {
-    scaleRef.current = state.scale
-  }, [state.scale])
+    stateRef.current = state
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.scale, state.betweenFrets])
+
 
   useEffect(() => {
     const handleKeyup = e => {
@@ -99,14 +108,22 @@ export default function IntervalMastery() {
         const rootPitch = FRETS_TO_PITCHES[rootFret]
         const rootNote = rootPitch.substring(0, 1)
 
-        const intervals = getScaleIntervals(scaleRef.current)
+        const intervals = getScaleIntervals(stateRef.current.scale)
         const notes = getScaleNotes(rootNote, intervals)
         dispatch({ type: 'SET_SCALE_NOTES', payload: notes })
-        const triadPitches = triadPitchesFromRoot(rootPitch, notes)
 
-        playChord(triadPitches, '4n')
+        if (stateRef.current.scale !== 'chromatic scale') {
+          const triadPitches = triadPitchesFromRoot(rootPitch, notes)
+
+          playChord(triadPitches, '4n')
+        }
+
+        else {
+          playNote(rootPitch, '4n')
+        }
+
         canvasRef.current.getContext('2d').drawImage(fretboardRef.current, 0, 0)
-        const fretsDrawn = drawScale(canvasRef, scaleRef.current, rootNote, false, false, true, [3, 8])
+        const fretsDrawn = drawScale(canvasRef, stateRef.current.scale, rootNote, false, false, true, stateRef.current.betweenFrets)
         const randomFret = getRandomFret(fretsDrawn)
         const randomNote = fretsToNotes[randomFret]
         dispatch({ type: 'SET_RANDOM_FRET', payload: randomFret })
@@ -135,12 +152,34 @@ export default function IntervalMastery() {
     return frets[Math.floor(Math.random() * frets.length - 1)]
   }
 
+  const handleFretSlide = e => {
+    const start = parseInt(e[0])
+    const end = parseInt(e[1])
+
+    dispatch({ type: 'SET_BETWEEN_FRETS', payload: [start, end] })
+  }
+
   return (
     <div>
       <EarTrainingCtx.Provider value={[state, dispatch]}>
         <div className="d-flex flex-row justify-content-between">
           <div>
-            <Canvas setRef={setRef} />
+            <div className="d-flex flex-column pb-5">
+              <Canvas setRef={setRef} />
+              <Slider
+                className="mt-0 ml-4 mr-5 mb-4"
+                pips={{
+                  mode: 'values',
+                  values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                  density: 12,
+                  stepped: true
+                }}
+                connect
+                onSlide={handleFretSlide}
+                start={state.betweenFrets}
+                range={{ min: 0, max: 12 }}
+              />
+            </div>
             <ScaleDegrees canvasRef={canvasRef} fretboardRef={fretboardRef} />
           </div>
           <InfoBar />

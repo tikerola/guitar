@@ -1,5 +1,6 @@
 import { scaleDegreeFromANote } from './scales/scales'
 import { fretsToNotes } from './fretsToNotes'
+import { SCALE_DEGREES } from './scales/constants'
 
 
 export const fretsToNearestRoot = (key, degree, fret, fretsDrawn) => {
@@ -21,6 +22,7 @@ export const fretsToNearestRoot = (key, degree, fret, fretsDrawn) => {
         break
 
       currentDegree = scaleDegreeFromANote(key, fretsToNotes[fretsDrawn[index - i]])
+      currentDegree = currentDegree.length === 1 ? parseInt(currentDegree) : parseInt(currentDegree.substring(1))
 
       if (i > 0 && currentDegree >= previousDegree) {
         duplicates++
@@ -42,8 +44,10 @@ export const fretsToNearestRoot = (key, degree, fret, fretsDrawn) => {
         break
 
       currentDegree = scaleDegreeFromANote(key, fretsToNotes[fretsDrawn[index + i]])
+      currentDegree = currentDegree.length === 1 ? parseInt(currentDegree) : parseInt(currentDegree.substring(1))
 
-      if (i > 0 && currentDegree <= previousDegree && !(currentDegree === '0' && previousDegree === '7')) {
+
+      if (i > 0 && currentDegree <= previousDegree && !(currentDegree === 0 && previousDegree === 7)) {
         duplicates++
         continue
       }

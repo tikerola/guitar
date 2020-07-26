@@ -30,6 +30,7 @@ export const NOTESOBJ = {
 
 export const MAJOR_SCALE = [2, 2, 1, 2, 2, 2, 1]
 export const MINOR_SCALE = [2, 1, 2, 2, 1, 2, 2]
+export const CHROMATIC_SCALE = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 export const MAJOR_PENTATONIC_SCALE = [2, 2, 3, 2, 3]
 export const MINOR_PENTATONIC_SCALE = [3, 2, 2, 3, 2]
 export const DORIAN = [2, 1, 2, 2, 2, 1, 2]

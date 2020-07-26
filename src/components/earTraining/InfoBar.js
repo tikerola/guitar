@@ -23,15 +23,17 @@ export default function InfoBar() {
         try to find the scale degree directly on the fretboard.
       </p>
       <div className="pl-3 pr-3 pb-3">
-        <span className="mr-3 font-weight-bolder">Minor Scale</span>
-        <Switch
-          onChange={handleChange}
-          checked={state.scale === 'major scale'}
-          checkedIcon={false}
-          uncheckedIcon={false}
-          className="align-self-end"
-        />
-        <span className="ml-3 font-weight-bolder">Major Scale</span>
+        <label className="d-flex flex-row">
+          <span className="mr-3 font-weight-bolder">Minor Scale</span>
+          <Switch
+            onChange={handleChange}
+            checked={state.scale === 'major scale'}
+            checkedIcon={false}
+            uncheckedIcon={false}
+            className="align-self-end"
+          />
+          <span className="ml-3 font-weight-bolder">Major Scale</span>
+        </label>
 
       </div>
       <p className="pl-3 pr-3 pb-3">
