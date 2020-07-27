@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer, useRef } from 'react'
+import React, { createContext, useEffect, useReducer, useRef, useState } from 'react'
 import Canvas from '../components/earTraining/Canvas'
 import InfoBar from '../components/earTraining/InfoBar'
 import ScaleDegrees from '../components/earTraining/ScaleDegrees'
@@ -8,76 +8,9 @@ import { FRETS_TO_PITCHES } from '../helpers/pitches'
 import { getScaleIntervals, getScaleNotes, triadPitchesFromRoot } from '../helpers/scales/scales'
 import { playChord, playNote } from '../helpers/tone/playFunctions'
 import { Slider } from "shards-react";
+import Judgement from '../components/earTraining/Judgement'
 
-const initialState = {
-  scale: 'major scale',
-  frets: ['E5', 'A5', 'D5', 'G5', 'B5'],
-  key: '',
-  scaleNotes: [],
-  note: '',
-  fretsDrawn: [],
-  pushedFret: '',
-  randomFret: '',
-  points: 0,
-  betweenFrets: [4, 8]
-}
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_SCALE':
-      return {
-        ...state,
-        scale: action.payload
-      }
-    case 'SET_KEY':
-      return {
-        ...state,
-        key: action.payload
-      }
-    case 'SET_SCALE_NOTES':
-      return {
-        ...state,
-        scaleNotes: action.payload
-      }
-
-    case 'SET_NOTE':
-      return {
-        ...state,
-        note: action.payload
-      }
-
-    case 'SET_FRETS_DRAWN':
-      return {
-        ...state,
-        fretsDrawn: action.payload
-      }
-
-    case 'SET_PUSHED_FRET':
-      return {
-        ...state,
-        pushedFret: action.payload
-      }
-
-    case 'ADD_POINT':
-      return {
-        ...state,
-        points: state.points + 1
-      }
-
-    case 'SET_RANDOM_FRET':
-      return {
-        ...state,
-        randomFret: action.payload
-      }
-    case 'SET_BETWEEN_FRETS':
-      return {
-        ...state,
-        betweenFrets: action.payload
-      }
-    default:
-      return state
-  }
-}
+import { reducer, initialState } from '../components/earTraining/state/reducer'
 
 export const EarTrainingCtx = createContext()
 
@@ -86,7 +19,13 @@ export default function IntervalMastery() {
   const canvasRef = useRef()
   const fretboardRef = useRef()
   const stateRef = useRef()
+  const trackFirstRenderRef = useRef(true)
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  const [quessMade, setQuessMade] = useState(false)
+  const [disableRestart, setDisableRestart] = useState(false)
+
+  const restartRef = useRef(false)
 
   const setRef = (cRef, fRef) => {
     canvasRef.current = cRef
@@ -98,11 +37,31 @@ export default function IntervalMastery() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.scale, state.betweenFrets])
 
+  useEffect(() => {
+
+    if (!trackFirstRenderRef.current) {
+      setQuessMade(true)
+
+      setTimeout(() => {
+        setQuessMade(false)
+      }, 1000)
+    }
+
+    else
+      trackFirstRenderRef.current = false
+
+  }, [state.pushedFret])
+
+  useEffect(() => {
+    restartRef.current = disableRestart
+  }, [disableRestart])
 
   useEffect(() => {
     const handleKeyup = e => {
-      if (e.keyCode === 32) {
+      if (e.keyCode === 32 && !restartRef.current) {
 
+        dispatch({ type: 'SET_DISABLE_RESTART', payload: true })
+        setDisableRestart(true)
         const rootFret = state.frets[Math.floor(Math.random() * state.frets.length)]
         dispatch({ type: 'SET_KEY', payload: fretsToNotes[rootFret] })
         const rootPitch = FRETS_TO_PITCHES[rootFret]
@@ -114,7 +73,6 @@ export default function IntervalMastery() {
 
         if (stateRef.current.scale !== 'chromatic scale') {
           const triadPitches = triadPitchesFromRoot(rootPitch, notes)
-
           playChord(triadPitches, '4n')
         }
 
@@ -126,16 +84,16 @@ export default function IntervalMastery() {
         const fretsDrawn = drawScale(canvasRef, stateRef.current.scale, rootNote, false, false, true, stateRef.current.betweenFrets)
         const randomFret = getRandomFret(fretsDrawn)
         const randomNote = fretsToNotes[randomFret]
+
         dispatch({ type: 'SET_RANDOM_FRET', payload: randomFret })
         dispatch({ type: 'SET_NOTE', payload: randomNote })
-
-
         dispatch({ type: 'SET_FRETS_DRAWN', payload: fretsDrawn })
 
 
         setTimeout(() => {
           playNote(FRETS_TO_PITCHES[randomFret], '4n')
-
+          dispatch({ type: 'SET_DISABLE_RESTART', payload: false })
+          setDisableRestart(false)
         }, 1300)
       }
     }
@@ -165,22 +123,31 @@ export default function IntervalMastery() {
         <div className="d-flex flex-row justify-content-between">
           <div>
             <div className="d-flex flex-column pb-5">
-              <Canvas setRef={setRef} />
-              <Slider
-                className="mt-0 ml-4 mr-5 mb-4"
-                pips={{
-                  mode: 'values',
-                  values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                  density: 12,
-                  stepped: true
-                }}
-                connect
-                onSlide={handleFretSlide}
-                start={state.betweenFrets}
-                range={{ min: 0, max: 12 }}
-              />
+              <div className="d-flex flex-column pb-5">
+                <Canvas setRef={setRef} />
+                <Slider
+                  className="mt-0 ml-4 mr-5 mb-4"
+                  pips={{
+                    mode: 'values',
+                    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                    density: 12,
+                    stepped: true
+                  }}
+                  connect
+                  onSlide={handleFretSlide}
+                  start={state.betweenFrets}
+                  range={{ min: 0, max: 12 }}
+                />
+              </div>
+              <ScaleDegrees canvasRef={canvasRef} fretboardRef={fretboardRef} />
+              {
+                quessMade &&
+                <Judgement
+                  className="w-50 m-auto rounded text-center bg-dark p-1 text-warning"
+                  answerWasCorrect={state.randomFret === state.pushedFret}
+                />
+              }
             </div>
-            <ScaleDegrees canvasRef={canvasRef} fretboardRef={fretboardRef} />
           </div>
           <InfoBar />
         </div>

@@ -29,7 +29,7 @@ export default function ScaleDegrees({ canvasRef, fretboardRef }) {
     if (scaleDegree === value.toString()) {
 
       drawNote(ctx, state.randomFret, scaleDegree !== '0' ? scaleDegree : 'R', 'blue', 'white');
-      dispatch({ type: 'ADD_POINT' })
+      dispatch({ type: 'SET_PUSHED_FRET', payload: state.randomFret })
 
       if (state.scale !== 'chromatic scale') {
 
@@ -43,10 +43,14 @@ export default function ScaleDegrees({ canvasRef, fretboardRef }) {
       }
 
     }
+
+    // Let's make sure that the state is changed for Judgement
+    else
+      dispatch({ type: 'SET_PUSHED_FRET', payload: `${Math.random()}` })
   }
 
   return (
-    <div className="container d-flex flex-row justify-content-around">
+    <div className="container d-flex flex-row justify-content-around mb-3">
 
       <div >
         <h5 className="text-center font-weight-bolder">SCALE DEGREES</h5>
@@ -59,7 +63,7 @@ export default function ScaleDegrees({ canvasRef, fretboardRef }) {
           <Button className="col" width="100px" active={false} handleClick={() => handleClick(6)}>6</Button>
           <Button className="col" width="100px" active={false} handleClick={() => handleClick(7)}>7</Button>
         </div>
-        <div className={`row ${state.scale === 'chromatic scale' ? 'visible' : 'visible'}`} style={{ paddingLeft: '58px' }}>
+        <div className={`row ${state.scale === 'chromatic scale' ? 'visible' : 'invisible'}`} style={{ paddingLeft: '58px' }}>
           <Button className="col" width="100px" active={false} handleClick={() => handleClick('b2')}>b2</Button>
           <Button className="col" width="100px" active={false} handleClick={() => handleClick('b3')}>b3</Button>
           <button className={`btn m-2`} style={{ width: '100px', cursor: 'default' }} disabled></button>

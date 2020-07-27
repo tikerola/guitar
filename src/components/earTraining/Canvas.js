@@ -46,7 +46,7 @@ export default function Canvas({ setRef }) {
         if (scaleDegree === '0' || state.scale === 'chromatic scale')
           playNote(FRETS_TO_PITCHES[fret], '4n')
 
-        drawNote(ctx, fret, scaleDegree !== '0' ? scaleDegree : '1', 'blue', 'white');
+        drawNote(ctx, fret, scaleDegree !== '0' ? scaleDegree : 'R', 'blue', 'white');
 
         if (state.scale !== 'chromatic scale') {
           const frets = fretsToNearestRoot(state.key, scaleDegree, fret, state.fretsDrawn)

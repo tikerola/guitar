@@ -1,6 +1,5 @@
-import { scaleDegreeFromANote } from './scales/scales'
 import { fretsToNotes } from './fretsToNotes'
-import { SCALE_DEGREES } from './scales/constants'
+import { scaleDegreeFromANote } from './scales/scales'
 
 
 export const fretsToNearestRoot = (key, degree, fret, fretsDrawn) => {
