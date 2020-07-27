@@ -10,7 +10,7 @@ import { playChord, playNote } from '../helpers/tone/playFunctions'
 import { Slider } from "shards-react";
 
 const initialState = {
-  scale: 'chromatic scale',
+  scale: 'major scale',
   frets: ['E5', 'A5', 'D5', 'G5', 'B5'],
   key: '',
   scaleNotes: [],
