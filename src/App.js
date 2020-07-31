@@ -17,12 +17,12 @@ function App() {
     <div>
       <Router>
         <NavBar />
-        <Route path="/Fretboard-Mastery" component={FretboardMastery} />
-        <Route path="/Interval-Mastery" component={IntervalMastery} />
-        <Route path="/Scales-Mastery" component={ScalesMastery} />
-        <Route path="/Ear-Training" component={EarTraining} />
-        <Route path="/Caged" component={Caged} />
-        <Route exact path="/" component={Home} />
+        <Route path="/guitar/Fretboard-Mastery" component={FretboardMastery} />
+        <Route path="/guitar/Interval-Mastery" component={IntervalMastery} />
+        <Route path="/guitar/Scales-Mastery" component={ScalesMastery} />
+        <Route path="/guitar/Ear-Training" component={EarTraining} />
+        <Route path="/guitar/Caged" component={Caged} />
+        <Route exact path="/guitar/" component={Home} />
       </Router>
       <div className="fixed-bottom">
         <Footer />
