@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/tikerola.github.io/guitar/precache-manifest.719d7fb5735476d60e6a9efc0302dba9.js"
+  "/tikerola.github.io/guitar/precache-manifest.a69e2f99a00716272cc9f45fde8c1445.js"
 );
 
 self.addEventListener('message', (event) => {
