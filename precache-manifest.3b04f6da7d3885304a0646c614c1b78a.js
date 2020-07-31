@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5908e294d83332af70e80477f8230620",
+    "revision": "3e9493f4efb5ed31823eecb41b796988",
     "url": "/tikerola.github.io/guitar/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tikerola.github.io/guitar/static/css/2.8d24d6c7.chunk.css"
   },
   {
-    "revision": "dd5976e8c0977583df0c",
+    "revision": "2198d993aabe3ec51f11",
     "url": "/tikerola.github.io/guitar/static/css/main.234a0072.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tikerola.github.io/guitar/static/js/2.7e5c2722.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "dd5976e8c0977583df0c",
-    "url": "/tikerola.github.io/guitar/static/js/main.8ca0b886.chunk.js"
+    "revision": "2198d993aabe3ec51f11",
+    "url": "/tikerola.github.io/guitar/static/js/main.b7b8455d.chunk.js"
   },
   {
     "revision": "52b01fc6e21367d107b8",
