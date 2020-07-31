@@ -36,7 +36,7 @@ export default function ScaleDegrees({ canvasRef, fretboardRef }) {
         const frets = fretsToNearestRoot(state.key, scaleDegree, state.randomFret, state.fretsDrawn)
 
         setTimeout(() => {
-          document.activeElement.blur()
+
           playSequenceOfNotes(frets, 0.5)
           drawSequenceOfFrets(ctx, state.key, frets, 500)
         }, 0)
@@ -47,6 +47,9 @@ export default function ScaleDegrees({ canvasRef, fretboardRef }) {
     // Let's make sure that the state is changed for Judgement
     else
       dispatch({ type: 'SET_PUSHED_FRET', payload: `${Math.random()}` })
+
+
+    document.activeElement.blur()
   }
 
   return (

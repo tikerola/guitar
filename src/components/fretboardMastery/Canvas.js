@@ -28,6 +28,13 @@ const LETTER_HEIGHT_CORRECTION = 4
 const STRING_X_STARTING_COORDINATE = 53
 const STRING_X_ENDING_COORDINATE = 840
 
+const synth = new Tone.PluckSynth({
+  attackNoise: 1,
+  release: 5,
+  dampening: 100,
+  resonance: 0.99
+}).toDestination()
+
 
 export default function Canvas() {
 
@@ -95,10 +102,7 @@ export default function Canvas() {
     const fret = inWhichFret(x, y, activeString)
 
     if (fret) {
-      const synth = new Tone.Synth();
 
-      // Connect to the speakers.
-      synth.toMaster();
 
       synth.triggerAttackRelease(FRETS_TO_PITCHES[fret], '4n')
       drawNote(ctx, fretboardPoints[fret].x, fretboardPoints[fret].y, fretsToNotes[fret], 'black', 'white');

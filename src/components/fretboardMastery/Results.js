@@ -22,7 +22,7 @@ export default function Results() {
         <div className="row">
           <div className="col">
             <span className="pr-3 d-inline-block font-weight-bolder" style={{ width: '70px' }}>20 - 30</span>
-            <span>You're fast, but you still have to think some notes.</span>
+            <span>You're fast, but you still have to think of some notes.</span>
           </div>
         </div>
         <div className="row">

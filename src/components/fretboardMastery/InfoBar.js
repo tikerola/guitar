@@ -7,7 +7,7 @@ export default function InfoBar() {
     <div className="container pt-3">
       <h2 className="text-center">Fretboard Mastery</h2>
       <p className="pl-3 pt-3 pr-3">
-        Find the right note at the right fret. Try to quess as many as you can in 60 seconds.
+        Find the right note at the right fret. Try to guess as many as you can in 60 seconds.
       </p>
       <p className="pl-3 pr-3 pb-3">
         The big note
