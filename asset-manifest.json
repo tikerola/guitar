@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/tikerola.github.io/guitar/static/css/main.234a0072.chunk.css",
-    "main.js": "/tikerola.github.io/guitar/static/js/main.8ca0b886.chunk.js",
-    "main.js.map": "/tikerola.github.io/guitar/static/js/main.8ca0b886.chunk.js.map",
-    "runtime-main.js": "/tikerola.github.io/guitar/static/js/runtime-main.c30ea37d.js",
-    "runtime-main.js.map": "/tikerola.github.io/guitar/static/js/runtime-main.c30ea37d.js.map",
-    "static/css/2.8d24d6c7.chunk.css": "/tikerola.github.io/guitar/static/css/2.8d24d6c7.chunk.css",
-    "static/js/2.7e5c2722.chunk.js": "/tikerola.github.io/guitar/static/js/2.7e5c2722.chunk.js",
-    "static/js/2.7e5c2722.chunk.js.map": "/tikerola.github.io/guitar/static/js/2.7e5c2722.chunk.js.map",
-    "index.html": "/tikerola.github.io/guitar/index.html",
-    "precache-manifest.e6b4981b85e0b5b3fa0cca4be89c61ed.js": "/tikerola.github.io/guitar/precache-manifest.e6b4981b85e0b5b3fa0cca4be89c61ed.js",
-    "service-worker.js": "/tikerola.github.io/guitar/service-worker.js",
-    "static/css/2.8d24d6c7.chunk.css.map": "/tikerola.github.io/guitar/static/css/2.8d24d6c7.chunk.css.map",
-    "static/css/main.234a0072.chunk.css.map": "/tikerola.github.io/guitar/static/css/main.234a0072.chunk.css.map",
-    "static/js/2.7e5c2722.chunk.js.LICENSE.txt": "/tikerola.github.io/guitar/static/js/2.7e5c2722.chunk.js.LICENSE.txt"
+    "main.css": "/guitar/static/css/main.234a0072.chunk.css",
+    "main.js": "/guitar/static/js/main.d6b8fd3c.chunk.js",
+    "main.js.map": "/guitar/static/js/main.d6b8fd3c.chunk.js.map",
+    "runtime-main.js": "/guitar/static/js/runtime-main.7e42e103.js",
+    "runtime-main.js.map": "/guitar/static/js/runtime-main.7e42e103.js.map",
+    "static/css/2.8d24d6c7.chunk.css": "/guitar/static/css/2.8d24d6c7.chunk.css",
+    "static/js/2.7e5c2722.chunk.js": "/guitar/static/js/2.7e5c2722.chunk.js",
+    "static/js/2.7e5c2722.chunk.js.map": "/guitar/static/js/2.7e5c2722.chunk.js.map",
+    "index.html": "/guitar/index.html",
+    "precache-manifest.930417714292794400aaa8318c436545.js": "/guitar/precache-manifest.930417714292794400aaa8318c436545.js",
+    "service-worker.js": "/guitar/service-worker.js",
+    "static/css/2.8d24d6c7.chunk.css.map": "/guitar/static/css/2.8d24d6c7.chunk.css.map",
+    "static/css/main.234a0072.chunk.css.map": "/guitar/static/css/main.234a0072.chunk.css.map",
+    "static/js/2.7e5c2722.chunk.js.LICENSE.txt": "/guitar/static/js/2.7e5c2722.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c30ea37d.js",
+    "static/js/runtime-main.7e42e103.js",
     "static/css/2.8d24d6c7.chunk.css",
     "static/js/2.7e5c2722.chunk.js",
     "static/css/main.234a0072.chunk.css",
-    "static/js/main.8ca0b886.chunk.js"
+    "static/js/main.d6b8fd3c.chunk.js"
   ]
 }
